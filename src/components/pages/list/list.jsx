@@ -3,10 +3,15 @@ import Fixtures from '../../../fixtures';
 import moment from 'moment';
 import ListItem from './listitem';
 import {Link} from 'react-router';
-import '../../../style/list.less';
 import { connect } from 'react-redux';
 import history from '../../../utilities/history';
-
+import Table from 'material-ui/lib/table/table';
+import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
+import TableRow from 'material-ui/lib/table/table-row';
+import TableHeader from 'material-ui/lib/table/table-header';
+import TableRowColumn from 'material-ui/lib/table/table-row-column';
+import TableBody from 'material-ui/lib/table/table-body';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 class List extends React.Component {
 
@@ -16,16 +21,24 @@ class List extends React.Component {
   }
 
   render() {
-    console.info(this.props)
     return (
       <div id="list">
-        <div className="header">
-            <div>Date</div>
-            <div>Correct</div>
-            <div>Wrong</div>
-        </div>
-        {this.renderRows()}
-        <Link to='report/new'>Luo uusi raportti</Link>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Päiväys</TableHeaderColumn>
+              <TableHeaderColumn>Oikein</TableHeaderColumn>
+              <TableHeaderColumn>Väärin</TableHeaderColumn>
+              <TableHeaderColumn></TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {this.renderRows()}
+          </TableBody>
+        </Table>
+
+        <hr/>
+        <RaisedButton label="Uusi raportti" secondary={true} onMouseDown={ () => history.push('report/new') } onTouchEnd={ () => history.push('report/new') } />
       </div>
     )
   }
@@ -34,18 +47,16 @@ class List extends React.Component {
   renderRows() {
     return this.props.list.items.map( (entry, index) => {
       return (
-        <div className="row" key={index} onClick={ this.showSummary.bind(this, entry._id) }>
-          <ListItem data={moment(entry.createdAt).format('DD.MM.YYYY')} />
-          <ListItem data={this.calculateCorrect(entry)} />
-          <ListItem data={this.calculateWrong(entry)} />
-        </div>
+        <TableRow key={entry._id}>
+          <TableRowColumn>{moment(entry.createdAt).format('DD.MM.YYYY')}</TableRowColumn>
+          <TableRowColumn>{this.calculateCorrect(entry)}</TableRowColumn>
+          <TableRowColumn>{this.calculateWrong(entry)}</TableRowColumn>
+          <TableRowColumn><span className="button-icon chart-button" onClick={this.showSummary.bind(this,entry._id)}></span></TableRowColumn>
+        </TableRow>
       )
+
     })
   }
-  showSummary(id) {
-    history.push('report/summary/' + id);
-  }
-
   calculateWrong(entry) {
     let wrong = 0;
     wrong += entry.category1.defects.length
@@ -61,6 +72,12 @@ class List extends React.Component {
     correct += entry.category3.correct
     return correct;
   }
+
+  showSummary(id) {
+    history.push('report/summary/' + id);
+  }
+
+
 }
 
 

@@ -2,6 +2,18 @@ import React from 'react';
 import lodash from 'lodash';
 import { connect } from 'react-redux';
 import history from '../../../utilities/history';
+import Card from 'material-ui/lib/card/card';
+import CardActions from 'material-ui/lib/card/card-actions';
+import CardHeader from 'material-ui/lib/card/card-header';
+import CardMedia from 'material-ui/lib/card/card-media';
+import CardTitle from 'material-ui/lib/card/card-title';
+import FlatButton from 'material-ui/lib/flat-button';
+import RaisedButton from 'material-ui/lib/raised-button';
+import CardText from 'material-ui/lib/card/card-text';
+
+const style = {
+  marginBottom: '30px'
+}
 
 class Summary extends React.Component {
   render() {
@@ -32,19 +44,15 @@ class Summary extends React.Component {
         <h1>Virheet</h1>
 
         <div>
-          <h3>{report.category1.id}. {report.category1.title}</h3>
           {this.renderCategoryDefects(report.category1)}
         </div>
         <div>
-          <h3>{report.category2.id}. {report.category2.title}</h3>
           {this.renderCategoryDefects(report.category2)}
         </div>
         <div>
-          <h3>{report.category3.id}. {report.category3.title}</h3>
           {this.renderCategoryDefects(report.category3)}
         </div>
-
-        <button onClick={() => history.push('/')}>Takaisin</button>
+        <RaisedButton label="Takaisin" onMouseDown={ () => history.push('/') } onTouchEnd={ () => history.push('/') } />
       </div>
     )
   }
@@ -52,12 +60,20 @@ class Summary extends React.Component {
   renderCategoryDefects(category) {
     return category.defects.map( (defect, index) => {
       return (
-        <div key={index}>
-          <img id="image" ref="preview" src={defect.image} alt="Kuva"/>
-          <div>Virhe: {defect.defect}</div>
-          <div>Vastuullinen: {defect.responsible}</div>
-          <div>Muuta: {defect.misc}</div>
-        </div>
+        <Card key={index} style={style}>
+          <CardHeader title={category.id + ' ' + category.title} />
+          <CardMedia>
+            <img id="image" ref="preview" src={defect.image} alt="Kuva"/>
+          </CardMedia>
+          <CardTitle title={'Vastuu: ' + defect.responsible} subtitle={defect.dateCreated} />
+          <CardText>
+            {defect.defect}
+          </CardText>
+          <CardActions>
+            <FlatButton label="Action1" />
+            <FlatButton label="Action2" />
+          </CardActions>
+      </Card>
       )
     })
   }

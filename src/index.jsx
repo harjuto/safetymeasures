@@ -13,6 +13,7 @@ import NewReport from './components/pages/report/new';
 import Defect from './components/pages/report/defect';
 import Summary from './components/pages/report/summary';
 
+
 ReactDOM.render(
   <Provider store={Store}>
     <div>

@@ -6,6 +6,7 @@ import { submitReport } from '../../../actions/report';
 import { connect } from 'react-redux';
 import history from '../../../utilities/history';
 import _ from 'lodash';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 class Report extends React.Component {
 
@@ -17,10 +18,9 @@ class Report extends React.Component {
   render() {
     return (
       <div>
-        <h2> date </h2>
+        <h2> {moment().format('DD.MM.YYYY')} </h2>
         {this.renderSections(this.props.report)}
-        <button onClick={this.submit}>Tallenna</button>
-        <Link to="/"> Back </Link>
+
       </div>
     )
   }
@@ -29,12 +29,22 @@ class Report extends React.Component {
     return (
       <div>
         <ReportCategory category={report.category1} dispatch={this.props.dispatch} />
+        <hr/>
         <ReportCategory category={report.category2} dispatch={this.props.dispatch} />
+        <hr/>
         <ReportCategory category={report.category3} dispatch={this.props.dispatch} />
-      </div>
+        <hr/>
+        <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submit } onTouchEnd={ this.submit } />
+        <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => history.push('/') } onTouchEnd={ () => history.push('/') } />
+
+    </div>
     )
   }
-
+  // <button className='button' onClick={this.submit}>Tallenna</button>
+  // <button className='button' onClick={this.submit}>Keskeytä</button>
+  // <button className='button'>
+  //   <Link className='button' to="/"> Peruuta </Link>
+  // </button>
   submit() {
     this.props.dispatch(submitReport(this.props.report))
     history.push('/');

@@ -19,6 +19,9 @@ module.exports = {
     path: PATHS.build,
     filename: 'bundle.min.js'
   },
+  externals: {
+    'react-tap-event-plugin': 'injectTapEventPlugin'
+  },
   module: {
     loaders: [
       {

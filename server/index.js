@@ -1,6 +1,5 @@
 'use strict'
 var Measurement = require('./src/models/measurement');
-var aws = require('aws-sdk');
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);

@@ -4,6 +4,8 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { submitDefect } from '../../../actions/report';
 import history from '../../../utilities/history';
+import RaisedButton from 'material-ui/lib/raised-button';
+import Paper from 'material-ui/lib/paper';
 
 class Defect extends React.Component {
 
@@ -16,10 +18,18 @@ class Defect extends React.Component {
     return (
       <div>
         <div>
-          <div>
-            <input type="file" id="image" ref="image" accept="image/*;capture=camera" />
+          <div className='image-preview-container'>
+            <div className='image-preview'>
+              <Paper  zDepth={4}>
+                <img id="image-preview" ref="preview" src=""/>
+              </Paper>
+            </div>
+            <div className='file-upload'>
+              <label for="image" className='button-icon camera-button'>
+                <input type="file" id="image" ref="image" accept="image/*;capture=camera" />
+              </label>
+            </div>
           </div>
-
           <div>
             <label htmlFor="defect">Virhe</label>
             <input name="defect" ref="defect" type="text" />
@@ -32,10 +42,10 @@ class Defect extends React.Component {
             <label htmlFor="misc">Muuta</label>
             <input name="misc" ref="misc" type="text" />
           </div>
-          <button onClick={this.submitForm}>Tallenna</button>
         </div>
-        <Link to="/report/new"> Takaisin </Link>
-        <img id="image-preview" ref="preview" src=""/>
+
+        <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submitForm } onTouchEnd={ this.submitForm } />
+        <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => history.push('/report/new') } onTouchEnd={ () => history.push('/report/new') }/>
       </div>
     )
   }

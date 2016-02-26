@@ -1,0 +1,30 @@
+label {
+  font-size: @normal-font-size;
+}
+
+.image-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.file-upload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+    input {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      padding: 0;
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0;
+      filter: alpha(opacity=0);
+      cursor: none;
+    }
+}
+
+.camera-button {
+  background-image: url('../images/camera_24px.svg');
+}

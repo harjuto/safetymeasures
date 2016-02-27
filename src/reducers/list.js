@@ -1,6 +1,5 @@
-import { INITIALIZE_APP } from '../actions/socket';
-
-
+import {RECEIVE_MEASUREMENTS} from '../actions/measurement'
+import _ from 'lodash';
 import {SUBMIT_REPORT} from '../actions/report';
 
 
@@ -12,10 +11,16 @@ const initialState = {
 export default (state = initialState, action) => {
   switch(action.type){
 
-    case INITIALIZE_APP: {
-      console.info('INITIALIZED APP');
+    case RECEIVE_MEASUREMENTS: {
+      var items = [];
+      console.info(action.measurements)
+       _.mapValues(action.measurements, (object, key) => {
+         object._id = key;
+         items.push(object)
+      })
+      console.info(items);
       return Object.assign({}, state, {
-        items: [].concat(action.data)
+        items: [].concat(items)
       })
     }
 

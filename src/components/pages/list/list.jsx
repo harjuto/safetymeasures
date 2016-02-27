@@ -12,8 +12,13 @@ import TableHeader from 'material-ui/lib/table/table-header';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
 import RaisedButton from 'material-ui/lib/raised-button';
+import {listMeasurements} from '../../../actions/measurement';
 
 class List extends React.Component {
+
+  componentDidMount() {
+    this.props.dispatch(listMeasurements())
+  }
 
   constructor() {
     super();
@@ -47,7 +52,7 @@ class List extends React.Component {
   renderRows() {
     return this.props.list.items.map( (entry, index) => {
       return (
-        <TableRow key={entry._id}>
+        <TableRow key={index}>
           <TableRowColumn>{moment(entry.createdAt).format('DD.MM.YYYY')}</TableRowColumn>
           <TableRowColumn>{this.calculateCorrect(entry)}</TableRowColumn>
           <TableRowColumn>{this.calculateWrong(entry)}</TableRowColumn>
@@ -59,9 +64,9 @@ class List extends React.Component {
   }
   calculateWrong(entry) {
     let wrong = 0;
-    wrong += entry.category1.defects.length
-    wrong += entry.category2.defects.length
-    wrong += entry.category3.defects.length
+    wrong += entry.category1.defects ? entry.category1.defects.length : 0
+    wrong += entry.category2.defects ? entry.category2.defects.length : 0
+    wrong += entry.category3.defects ? entry.category3.defects.length : 0
     return wrong;
   }
 

@@ -13,6 +13,7 @@
     "aws-sdk": "^2.2.37",
     "body-parser": "~1.0.1",
     "express": "^4.13.4",
+    "firebase": "^2.4.1",
     "method-override": "~2.0.2",
     "mongoose": "^4.2.6",
     "q": "^1.4.1",

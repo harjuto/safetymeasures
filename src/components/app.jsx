@@ -16,7 +16,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.info(this.props.root.auth.password.email)
     return (
       <div className="container">
           <ToolBar auth={this.props.root.auth} dispatch={this.props.dispatch}/>

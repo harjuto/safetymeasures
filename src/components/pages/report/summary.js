@@ -27,17 +27,17 @@ class Summary extends React.Component {
           <div>
             <h3>{report.category1.id}. {report.category1.title}</h3>
             <div>Oikein: {report.category1.correct}</div>
-            <div>Väärin: {report.category1.defects.length}</div>
+            <div>Väärin: {report.category1.defects ? report.category1.defects.length : 0 }</div>
           </div>
           <div>
             <h3>{report.category2.id}. {report.category2.title}</h3>
             <div>Oikein: {report.category2.correct}</div>
-            <div>Väärin: {report.category2.defects.length}</div>
+            <div>Väärin: {report.category2.defects ? report.category2.defects.length : 0 }</div>
           </div>
           <div>
             <h3>{report.category3.id}. {report.category3.title}</h3>
             <div>Oikein: {report.category3.correct}</div>
-            <div>Väärin: {report.category3.defects.length}</div>
+            <div>Väärin: {report.category3.defects ? report.category3.defects.length : 0 }</div>
           </div>
 
         <hr />
@@ -58,7 +58,8 @@ class Summary extends React.Component {
   }
 
   renderCategoryDefects(category) {
-    return category.defects.map( (defect, index) => {
+    var defects = category.defects || [];
+    return defects.map( (defect, index) => {
       return (
         <Card key={index} style={style}>
           <CardHeader title={category.id + ' ' + category.title} />

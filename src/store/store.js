@@ -3,7 +3,6 @@ import thunkMiddleware from 'redux-thunk';
 import rootReducer from '../reducers/root';
 import listReducer from '../reducers/list';
 import reportReducer from '../reducers/report'
-import formReducer from '../reducers/form';
 import loginReducer from '../reducers/login';
 import {getAuthentication, connectToFirebase} from '../actions/login';
 
@@ -15,7 +14,6 @@ const combinedReducer = combineReducers({
   rootReducer,
   listReducer,
   reportReducer,
-  formReducer,
   loginReducer
 });
 

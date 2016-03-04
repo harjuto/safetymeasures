@@ -6,6 +6,7 @@ import IconDone from 'material-ui/lib/svg-icons/action/done';
 import IconError from 'material-ui/lib/svg-icons/alert/error';
 import history from '../../../utilities/history';
 import Badge from 'material-ui/lib/badge';
+import FlatButton from 'material-ui/lib/flat-button';
 
 export default class ReportSection extends React.Component {
 
@@ -17,26 +18,31 @@ export default class ReportSection extends React.Component {
   render() {
     var category = this.props.category;
     return (
-      <div>
-        <h3>{category.title}</h3>
-            <Badge badgeContent={category.correct} secondary={true}>
-            <FloatingActionButton secondary={true} onMouseDown={ () => this.correctClicked(category) } onTouchEnd={() => this.correctClicked(category)}>
-              <IconDone />
-            </FloatingActionButton>
-          </Badge>
-          <Badge badgeContent={category.defects.length} primary={true}>
-            <FloatingActionButton onMouseDown={ () => history.push("/report/new/defect/" + category.id ) } onTouchEnd={() => history.push("/report/new/defect/" + category.id )}>
-              <IconError />
-            </FloatingActionButton>
-          </Badge>
+      <div className="category-section">
+        <span className="category-title">
+          {category.title}
+        </span>
+        <span className="category-functions">
+          <FlatButton
+          label="Oikein"
+          linkButton={false}
+          secondary={true}
+          icon={<span>{category.correct}</span>}
+          onMouseDown={ () => this.correctClicked(category) }
+          onTouchEnd={() => this.correctClicked(category) }
+          />
+          <FlatButton
+          label="Väärin"
+          linkButton={false}
+          primary={true}
+          icon={<span>{category.defects.length}</span>}
+          onMouseDown={ () => history.push("/report/new/defect/" + category.id ) }
+          onTouchEnd={() => history.push("/report/new/defect/" + category.id ) }
+          />
+        </span>
       </div>
     )
   }
-  // <button className='button' onClick={() => this.correctClicked(category)}>{category.correct} Oikein</button>
-  // <button className='button'>
-  //   {category.defects.length}
-  //   <Link to={"/report/new/defect/" + category.id }> Väärin </Link>
-  // </button>
   correctClicked(category) {
     this.props.dispatch(correctPressed(category))
   }

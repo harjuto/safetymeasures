@@ -1,53 +1,50 @@
 import moment from 'moment';
-import { CORRECT_PRESSED, SUBMIT_DEFECT, SUBMIT_REPORT } from '../actions/report';
-import _ from 'lodash';
+import {
+  CORRECT_PRESSED,
+  SUBMIT_DEFECT,
+  DEFECT_DATA_CHANGED,
+  SUBMIT_REPORT,
+  REPORT_DATA_CHANGED } from '../actions/report';
 
-const initialState = {
-  category1: {
-    id: 1,
-    title: "Työskentely",
-    correct: 0,
-    defects: []
-  },
-  category2: {
-    id: 2,
-    title: "Telineet",
-    correct: 0,
-    defects: []
-  },
-  category3: {
-    id: 3,
-    title: "Koneet",
-    correct: 0,
-    defects: []
-  }
-};
+import _ from 'lodash';
+import reportMetadata from '../metadata';
+
+const initialState = reportMetadata;
 
 function clone(state) {
-  return _.mapValues(state, (category) => {
+  var clonedState = Object.assign({}, state)
+  clonedState.categories = state.categories.map( category => {
     return Object.assign({}, category, {
-      defects: [
-        ...category.defects
-      ]
+      defects: [].concat(category.defects)
     })
   })
+  return clonedState;
 }
 
 export default (state = initialState, action) => {
-
   switch(action.type) {
     case CORRECT_PRESSED:
       var clonedState = clone(state);
-      var category = clonedState['category' + action.category.id]
+      var category = _.find(clonedState.categories, {'id': action.category.id})
       category.correct++;
       return clonedState;
 
     case SUBMIT_DEFECT:
       var clonedState = clone(state);
-      var category = clonedState['category' + action.data.category.id]
+      var category = _.find(clonedState.categories, {'id': action.data.category.id})
       category.defects.push(action.data.defect);
       return clonedState;
 
+    case DEFECT_DATA_CHANGED: {
+      var clonedState = clone(state);
+      clonedState.defectTemplate = Object.assign({}, clonedState.defectTemplate, action.data);
+      return clonedState;
+    }
+    case REPORT_DATA_CHANGED: {
+      var clonedState = clone(state);
+      clonedState.info = Object.assign({}, clonedState.info, action.data)
+      return clonedState;
+    }
     default:
       return state;
   }

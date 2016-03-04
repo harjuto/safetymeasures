@@ -3,7 +3,13 @@ import Toolbar from 'material-ui/lib/toolbar/toolbar';
 import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
 import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator';
 import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import DropDownMenu from 'material-ui/lib/DropDownMenu';
+import IconMenu from 'material-ui/lib/menus/icon-menu';
 import FlatButton from 'material-ui/lib/flat-button';
+import IconButton from 'material-ui/lib/icon-button';
+import ExitAppButton from 'material-ui/lib/svg-icons/action/exit-to-app';
+
 import {logout} from '../actions/login';
 
 export default class ToolBar extends React.Component {
@@ -22,8 +28,9 @@ export default class ToolBar extends React.Component {
       <Toolbar>
         <ToolbarGroup float="right">
           <ToolbarTitle text={auth.password.email} />
-          <ToolbarSeparator />
-          <FlatButton label="Logout" onTouchEnd={this.logout} onMouseDown={this.logout}/>
+             <IconButton onTouchEnd={this.logout} onMouseDown={this.logout}>
+               <ExitAppButton />
+             </IconButton>
         </ToolbarGroup>
       </Toolbar>
     )

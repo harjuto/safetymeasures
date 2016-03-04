@@ -34,6 +34,8 @@ class FirebaseConnector {
   }
 
   saveReport(report) {
+    console.info('Saving to firebase')
+    console.info(report);
     var ref = this.firebase.child("measurements");
     var newReportRef = ref.push(report);
     // var serializedReport = Object.assign({}, newReportRef, report);

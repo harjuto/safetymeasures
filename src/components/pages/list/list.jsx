@@ -64,17 +64,17 @@ class List extends React.Component {
   }
   calculateWrong(entry) {
     let wrong = 0;
-    wrong += entry.category1.defects ? entry.category1.defects.length : 0
-    wrong += entry.category2.defects ? entry.category2.defects.length : 0
-    wrong += entry.category3.defects ? entry.category3.defects.length : 0
+    entry.categories.forEach( (category) => {
+      wrong += category.defects ? category.defects.length : 0;
+    })
     return wrong;
   }
 
   calculateCorrect(entry) {
     let correct = 0;
-    correct += entry.category1.correct
-    correct += entry.category2.correct
-    correct += entry.category3.correct
+    entry.categories.forEach( (category) => {
+      correct += category.correct;
+    })
     return correct;
   }
 

@@ -2,51 +2,114 @@ import React from 'react';
 import {Link} from 'react-router';
 import ReportCategory from './category';
 import moment from 'moment';
-import { submitReport } from '../../../actions/report';
+import { submitReport, reportDataChanged } from '../../../actions/report';
 import { connect } from 'react-redux';
 import history from '../../../utilities/history';
 import _ from 'lodash';
 import RaisedButton from 'material-ui/lib/raised-button';
+import TextField from 'material-ui/lib/text-field';
+import Divider from 'material-ui/lib/divider';
+import Paper from 'material-ui/lib/paper';
+import DatePicker from 'material-ui/lib/date-picker/date-picker';
+
+const style = {
+  marginLeft: 20,
+};
+
+function dateFormatter(date) {
+  return moment(date).format('DD.MM.YYYY');
+}
 
 class Report extends React.Component {
 
   constructor() {
     super();
     this.submit = this.submit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   render() {
+    console.info(this.props)
     return (
       <div>
-        <h2> {moment().format('DD.MM.YYYY')} </h2>
         {this.renderSections(this.props.report)}
-
       </div>
     )
   }
 
   renderSections(report) {
+    let totalCorrect = this.calculateCorrect(report);
+    let totalWrong = this.calculateWrong(report);
+    let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);
     return (
       <div>
-        <ReportCategory category={report.category1} dispatch={this.props.dispatch} />
-        <hr/>
-        <ReportCategory category={report.category2} dispatch={this.props.dispatch} />
-        <hr/>
-        <ReportCategory category={report.category3} dispatch={this.props.dispatch} />
-        <hr/>
-        <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submit } onTouchEnd={ this.submit } />
-        <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => history.push('/') } onTouchEnd={ () => history.push('/') } />
+        <Paper zDepth={2}>
+          <TextField id="contractor" value={report.info.contractor}  hintText="Urakoitsija" style={style} underlineShow={false} onChange={this.handleChange} />
+          <Divider />
+          <TextField id="foreman" value={report.info.foreman} hintText="Työnjohtaja" style={style} underlineShow={false} onChange={this.handleChange} />
+          <Divider />
+          <TextField id="sitename" value={report.info.sitename}  hintText="Työmaan nimi" style={style} underlineShow={false} onChange={this.handleChange} />
+          <Divider />
+          <TextField id="measurer" value={report.info.measurer} hintText="Mittaaja" style={style} underlineShow={false} onChange={this.handleChange} />
+          <Divider />
+          <DatePicker id="date" value={report.info.date} hintText="Päiväys" style={style} autoOk={true} defaultDate={new Date()} formatDate={dateFormatter} onChange={this.handleChange} />
+          <Divider />
+        </Paper>
+
+        <div className="categories">
+          {report.categories.map( (category, index) => {
+            return (
+              <div key={index}>
+                <ReportCategory category={category} dispatch={this.props.dispatch} />
+                <hr/>
+              </div>
+            )
+          })}
+          <hr/>
+          <div className="categories-total">
+            <span>Oikein: {totalCorrect}</span>
+            <span>Väärin: {totalWrong}</span>
+            <span>Oikein %: {totalPercentage}</span>
+          </div>
+          <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submit } onTouchEnd={ this.submit } />
+          <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => history.push('/') } onTouchEnd={ () => history.push('/') } />
+        </div>
+
 
     </div>
     )
   }
-  // <button className='button' onClick={this.submit}>Tallenna</button>
-  // <button className='button' onClick={this.submit}>Keskeytä</button>
-  // <button className='button'>
-  //   <Link className='button' to="/"> Peruuta </Link>
-  // </button>
+
+  handleChange(event) {
+    this.props.dispatch(reportDataChanged({
+      [event.target.id]: event.target.value
+    }))
+  }
+
+  calculateCorrect(report) {
+    let correct = 0;
+    report.categories.forEach( (category) => {
+      correct += category.correct;
+    })
+    return correct;
+  }
+
+  calculateWrong(report) {
+    let wrong = 0;
+    report.categories.forEach( (category) => {
+      wrong += category.defects ? category.defects.length : 0;
+    })
+    return wrong;
+  }
+
   submit() {
-    this.props.dispatch(submitReport(this.props.report))
+    var data = {
+      info: this.props.report.info,
+      categories: this.props.report.categories
+    }
+    console.info(data)
+
+    this.props.dispatch(submitReport(data))
     history.push('/');
   }
 }

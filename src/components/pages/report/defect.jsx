@@ -2,16 +2,37 @@ import React from 'react';
 import {Link} from 'react-router';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { submitDefect } from '../../../actions/report';
+import { submitDefect, defectDataChanged } from '../../../actions/report';
 import history from '../../../utilities/history';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
+import TextField from 'material-ui/lib/text-field';
+import Divider from 'material-ui/lib/divider';
+
+
+const style = {
+  marginLeft: 20,
+};
 
 class Defect extends React.Component {
 
   constructor(props){
     super(props);
     this.submitForm = this.submitForm.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.refs.image.onchange = function(){
+        var files = document.getElementById("image").files;
+        var file = files[0];
+        if(file == null){
+            alert("No file selected.");
+        }
+        else{
+            get_signed_request(file);
+        }
+    };
   }
 
   render() {
@@ -30,18 +51,15 @@ class Defect extends React.Component {
               </label>
             </div>
           </div>
-          <div>
-            <label htmlFor="defect">Virhe</label>
-            <input name="defect" ref="defect" type="text" />
-          </div>
-          <div>
-            <label htmlFor="responsible">Vastuu</label>
-            <input name="responsible" ref="responsible" type="text" />
-          </div>
-          <div>
-            <label htmlFor="misc">Muuta</label>
-            <input name="misc" ref="misc" type="text" />
-          </div>
+
+          <Paper zDepth={2}>
+            <TextField id="description" hintText="Virhe" style={style} underlineShow={false} onChange={this.handleChange} />
+            <Divider />
+            <TextField id="responsible" hintText="Vastuullinen" style={style} underlineShow={false} onChange={this.handleChange} />
+            <Divider />
+            <TextField id="misc" hintText="Muuta" style={style} underlineShow={false} onChange={this.handleChange} />
+            <Divider />
+          </Paper>
         </div>
 
         <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submitForm } onTouchEnd={ this.submitForm } />
@@ -50,17 +68,10 @@ class Defect extends React.Component {
     )
   }
 
-  componentDidMount() {
-    this.refs.image.onchange = function(){
-        var files = document.getElementById("image").files;
-        var file = files[0];
-        if(file == null){
-            alert("No file selected.");
-        }
-        else{
-            get_signed_request(file);
-        }
-    };
+  handleChange(event) {
+    this.props.dispatch(defectDataChanged({
+      [event.target.id]: event.target.value
+    }))
   }
 
   submitForm() {
@@ -68,16 +79,10 @@ class Defect extends React.Component {
 
     var data = {
       category: {
-        id: category
+        id: parseInt(category,10)
       },
-      defect:{
-        image: this.refs.preview.src,
-        defect: this.refs.defect.value,
-        responsible: this.refs.responsible.value,
-        misc: this.refs.misc.value
-      }
+      defect: this.props.report.defectTemplate
     };
-    console.info(data);
 
     this.props.dispatch(submitDefect(data));
     history.push('/report/new');

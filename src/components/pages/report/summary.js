@@ -95,7 +95,7 @@ class Summary extends React.Component {
           {this.renderReportDefects(report)}
         </div>
         <div className="footer">
-          <RaisedButton label="Takaisin" onMouseDown={ () => history.push('/') } onTouchEnd={ () => history.push('/') } />
+          <RaisedButton label="Takaisin" onMouseDown={ () => {history.push('/'); return false;} } onTouchEnd={ () => {history.push('/'); return false; }} />
         </div>
       </div>
     )

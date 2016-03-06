@@ -77,7 +77,7 @@ class Report extends React.Component {
         </div>
         <div className="footer">
           <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submit } onTouchEnd={ this.submit } />
-          <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => history.push('/') } onTouchEnd={ () => history.push('/') } />
+          <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => {history.push('/'); return false;}} onTouchEnd={ () => {history.push('/'); return false;}} />
         </div>
     </div>
     )
@@ -110,10 +110,9 @@ class Report extends React.Component {
       info: this.props.report.info,
       categories: this.props.report.categories
     }
-    console.info(data)
-
     this.props.dispatch(submitReport(data))
     history.push('/');
+    return false;
   }
 }
 

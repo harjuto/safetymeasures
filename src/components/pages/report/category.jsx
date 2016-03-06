@@ -30,7 +30,7 @@ export default class ReportSection extends React.Component {
             <ButtonGroup label="Oikein" typeClass="correct" action={this.incrementCorrect} undoAction={this.decrementCorrect} value={this.props.category.correct} />
           </div>
           <div className="function decrement">
-            <ButtonGroup label="Väärin" typeClass="defect" action={() => history.push("/report/new/defect/" + category.id )} undoAction={this.removeDefect} value={this.props.category.defects.length}/>
+            <ButtonGroup label="Väärin" typeClass="defect" action={() => {history.push("/report/new/defect/" + category.id ); return false; }} undoAction={this.removeDefect} value={this.props.category.defects.length}/>
         </div>
         </div>
       </div>
@@ -38,16 +38,18 @@ export default class ReportSection extends React.Component {
   }
 
   incrementCorrect() {
-    console.info('Incrementing')
     this.props.dispatch(incrementCorrect(this.props.category));
+    return false;
   }
 
   decrementCorrect() {
     this.props.dispatch(decrementCorrect(this.props.category));
+    return false;
   }
 
   removeDefect(id) {
     this.props.dispatch(removeDefect(id))
+    return false;
   }
 }
 

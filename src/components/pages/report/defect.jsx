@@ -66,7 +66,7 @@ class Defect extends React.Component {
         </div>
         <div className="footer">
           <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submitForm } onTouchEnd={ this.submitForm } />
-          <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => history.push('/report/new') } onTouchEnd={ () => history.push('/report/new') }/>
+          <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => { history.push('/report/new'); return false; }} onTouchEnd={ () => {history.push('/report/new'); return false; }}/>
         </div>
       </div>
     )
@@ -90,6 +90,7 @@ class Defect extends React.Component {
 
     this.props.dispatch(submitDefect(data));
     history.push('/report/new');
+    return false;
   }
 
   upload_file(file, signed_request, url){

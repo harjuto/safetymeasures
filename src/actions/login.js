@@ -27,6 +27,7 @@ export function login(credentials) {
   return dispatch => {
     dispatch(loginInProgress())
     firebase.login(credentials, (error, authData) => {
+        console.info('Login finished')
         if (error) {
           dispatch(loginFailed(error));
         } else {

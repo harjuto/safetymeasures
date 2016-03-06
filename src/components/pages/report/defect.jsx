@@ -20,9 +20,12 @@ class Defect extends React.Component {
     super(props);
     this.submitForm = this.submitForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.get_signed_request = this.get_signed_request.bind(this);
+    this.upload_file = this.upload_file.bind(this);
   }
 
   componentDidMount() {
+    var _this = this;
     this.refs.image.onchange = function(){
         var files = document.getElementById("image").files;
         var file = files[0];
@@ -30,7 +33,7 @@ class Defect extends React.Component {
             alert("No file selected.");
         }
         else{
-            get_signed_request(file);
+            _this.get_signed_request(file);
         }
     };
   }
@@ -88,39 +91,47 @@ class Defect extends React.Component {
     history.push('/report/new');
   }
 
+  upload_file(file, signed_request, url){
+      var _this = this;
+      var xhr = new XMLHttpRequest();
+      xhr.open("PUT", signed_request);
+      xhr.setRequestHeader('x-amz-acl', 'public-read');
+      xhr.onload = function() {
+          if (xhr.status === 200) {
+              document.getElementById("image-preview").src = url;
+              _this.props.dispatch(defectDataChanged({
+                'image': url
+              }))
+          }
+      };
+      xhr.onerror = function() {
+          alert("Could not upload file.");
+      };
+      xhr.send(file);
+  }
+
+  get_signed_request(file){
+      var _this = this;
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "http://localhost:1337/sign_s3?file_name="+file.name+"&file_type="+file.type);
+      xhr.onreadystatechange = function(){
+          if(xhr.readyState === 4){
+              if(xhr.status === 200){
+                  var response = JSON.parse(xhr.responseText);
+                  _this.upload_file(file, response.signed_request, response.url);
+              }
+              else{
+                  alert("Could not get signed URL.");
+              }
+          }
+      };
+      xhr.send();
+  }
+
+
 }
 
-function upload_file(file, signed_request, url){
-    var xhr = new XMLHttpRequest();
-    xhr.open("PUT", signed_request);
-    xhr.setRequestHeader('x-amz-acl', 'public-read');
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            document.getElementById("image-preview").src = url;
-        }
-    };
-    xhr.onerror = function() {
-        alert("Could not upload file.");
-    };
-    xhr.send(file);
-}
 
-function get_signed_request(file){
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://localhost:1337/sign_s3?file_name="+file.name+"&file_type="+file.type);
-    xhr.onreadystatechange = function(){
-        if(xhr.readyState === 4){
-            if(xhr.status === 200){
-                var response = JSON.parse(xhr.responseText);
-                upload_file(file, response.signed_request, response.url);
-            }
-            else{
-                alert("Could not get signed URL.");
-            }
-        }
-    };
-    xhr.send();
-}
 
 
 function mapStateToProps(state){

@@ -1,7 +1,9 @@
 import moment from 'moment';
 import {
-  CORRECT_PRESSED,
+  INCREMENT_CORRECT,
+  DECREMENT_CORRECT,
   SUBMIT_DEFECT,
+  REMOVE_DEFECT,
   DEFECT_DATA_CHANGED,
   SUBMIT_REPORT,
   REPORT_DATA_CHANGED } from '../actions/report';
@@ -23,16 +25,30 @@ function clone(state) {
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case CORRECT_PRESSED:
+    case INCREMENT_CORRECT:
       var clonedState = clone(state);
       var category = _.find(clonedState.categories, {'id': action.category.id})
       category.correct++;
+      return clonedState;
+
+    case DECREMENT_CORRECT:
+      var clonedState = clone(state);
+      var category = _.find(clonedState.categories, {'id': action.category.id})
+      if(category.correct > 0) {
+        category.correct--;
+      }
       return clonedState;
 
     case SUBMIT_DEFECT:
       var clonedState = clone(state);
       var category = _.find(clonedState.categories, {'id': action.data.category.id})
       category.defects.push(action.data.defect);
+      return clonedState;
+
+    case REMOVE_DEFECT:
+      var clonedState = clone(state);
+      var category = _.find(clonedState.categories, {'id': action.id})
+      category.defects.pop();
       return clonedState;
 
     case DEFECT_DATA_CHANGED: {

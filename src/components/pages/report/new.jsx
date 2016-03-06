@@ -28,8 +28,12 @@ class Report extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    this.props.dispatch(reportDataChanged({
+      'date': moment().format('YYYY-DD-MM')
+    }))  }
+
   render() {
-    console.info(this.props)
     return (
       <div>
         {this.renderSections(this.props.report)}
@@ -43,39 +47,37 @@ class Report extends React.Component {
     let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);
     return (
       <div>
-        <Paper zDepth={2}>
-          <TextField id="contractor" value={report.info.contractor}  hintText="Urakoitsija" style={style} underlineShow={false} onChange={this.handleChange} />
-          <Divider />
-          <TextField id="foreman" value={report.info.foreman} hintText="Työnjohtaja" style={style} underlineShow={false} onChange={this.handleChange} />
-          <Divider />
-          <TextField id="sitename" value={report.info.sitename}  hintText="Työmaan nimi" style={style} underlineShow={false} onChange={this.handleChange} />
-          <Divider />
-          <TextField id="measurer" value={report.info.measurer} hintText="Mittaaja" style={style} underlineShow={false} onChange={this.handleChange} />
-          <Divider />
-          <DatePicker id="date" value={report.info.date} hintText="Päiväys" style={style} autoOk={true} defaultDate={new Date()} formatDate={dateFormatter} onChange={this.handleChange} />
-          <Divider />
-        </Paper>
-
+        <div className="info">
+          <Paper zDepth={2}>
+            <TextField id="contractor" value={report.info.contractor}  hintText="Urakoitsija" style={style} underlineShow={false} onChange={this.handleChange} />
+            <Divider />
+            <TextField id="foreman" value={report.info.foreman} hintText="Työnjohtaja" style={style} underlineShow={false} onChange={this.handleChange} />
+            <Divider />
+            <TextField id="sitename" value={report.info.sitename}  hintText="Työmaan nimi" style={style} underlineShow={false} onChange={this.handleChange} />
+            <Divider />
+            <TextField id="measurer" value={report.info.measurer} hintText="Mittaaja" style={style} underlineShow={false} onChange={this.handleChange} />
+            <Divider />
+            <input id="date" type="date" value={report.info.date} placeholder="Päiväys" onChange={this.handleChange} />
+            <Divider />
+          </Paper>
+        </div>
+        <div className="categories-total">
+          <span>Oikein: {totalCorrect}</span>
+          <span>Väärin: {totalWrong}</span>
+          <span>Oikein %: {totalPercentage}</span>
+        </div>
         <div className="categories">
           {report.categories.map( (category, index) => {
             return (
-              <div key={index}>
-                <ReportCategory category={category} dispatch={this.props.dispatch} />
-                <hr/>
-              </div>
+                <ReportCategory key={index} category={category} dispatch={this.props.dispatch} />
             )
           })}
           <hr/>
-          <div className="categories-total">
-            <span>Oikein: {totalCorrect}</span>
-            <span>Väärin: {totalWrong}</span>
-            <span>Oikein %: {totalPercentage}</span>
-          </div>
+        </div>
+        <div className="sticky-buttons">
           <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submit } onTouchEnd={ this.submit } />
           <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => history.push('/') } onTouchEnd={ () => history.push('/') } />
         </div>
-
-
     </div>
     )
   }

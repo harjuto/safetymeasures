@@ -13,6 +13,7 @@ import NewReport from './components/pages/report/new';
 import Defect from './components/pages/report/defect';
 import Summary from './components/pages/report/summary';
 import Login from './components/login/loginform';
+import FastClick from 'fastclick';
 
 ReactDOM.render(
   <Provider store={Store}>
@@ -33,3 +34,7 @@ ReactDOM.render(
   ,
   document.getElementById('app')
 );
+
+window.addEventListener('load', function() {
+    new FastClick(document.body);
+}, false);

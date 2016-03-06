@@ -33,42 +33,57 @@ class Summary extends React.Component {
     let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);    return (
       <div>
         <h3>Yhteenveto</h3>
-          <Paper zDepth={2}>
-            <TextField disabled={true} value={report.info.contractor} style={style} underlineShow={false} onChange={this.handleChange} />
-            <Divider />
-            <TextField disabled={true} value={report.info.foreman} style={style} underlineShow={false} onChange={this.handleChange} />
-            <Divider />
-            <TextField disabled={true} value={report.info.sitename} style={style} underlineShow={false} onChange={this.handleChange} />
-            <Divider />
-            <TextField disabled={true} value={report.info.measurer} style={style} underlineShow={false} onChange={this.handleChange} />
-            <Divider />
-            <DatePicker disabled={true} value={report.info.date} style={style} autoOk={true} formatDate={dateFormatter} onChange={this.handleChange} />
-            <Divider />
-          </Paper>
-          <div className="categories">
-            {report.categories.map( (category, index) => {
-              return (
-                <div key={index}>
-                  <div className="category-section">
-                    <span className="category-title">
+          <table>
+            <thead></thead>
+            <tbody>
+              <tr>
+                <td>Urakoitsija</td>
+                <td>{report.info.contractor}</td>
+              </tr>
+              <tr>
+                <td>Työnjohtaja</td>
+                <td>{report.info.foreman}</td>
+              </tr>
+              <tr>
+                <td>Työmaan nimi</td>
+                <td>{report.info.sitename}</td>
+              </tr>
+              <tr>
+                <td>Mittaaja</td>
+                <td>{report.info.measurer}</td>
+              </tr>
+              <tr>
+                <td>Päiväys</td>
+                <td>{report.info.date}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th>Kategoria</th>
+                <th>Oikein</th>
+                <th>Väärin</th>
+              </tr>
+            </thead>
+            <tbody>
+              {report.categories.map( (category, index) => {
+                return (
+                  <tr key={index}>
+                    <td>
                       {category.title}
-                    </span>
-                    <span className="category-functions">
-                      <span>Oikein: {category.correct} </span>
-                      <span>Väärin: {category.defects ? category.defects.length : 0}</span>
-
-                    </span>
-                  </div>
-                   <hr/>
-                </div>
-              )
-            })}
-            <div className="categories-total">
-              <span>Oikein: {totalCorrect}</span>
-              <span>Väärin: {totalWrong}</span>
-              <span>Oikein %: {totalPercentage}</span>
-            </div>
-
+                    </td>
+                    <td>{category.correct} </td>
+                    <td>{category.defects ? category.defects.length : 0}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+          <div className="categories-total">
+            <span>Oikein: {totalCorrect}</span>
+            <span>Väärin: {totalWrong}</span>
+            {this.renderCorrect(totalPercentage)}
           </div>
 
 
@@ -83,25 +98,46 @@ class Summary extends React.Component {
     )
   }
 
+  renderCorrect(percentage) {
+    var style = {}
+    if(percentage >= 85) {
+      style.color = "green"
+    } else if(pecentage < 85) {
+      style.color = red;
+    }
+    return <span style={style}>Oikein: {percentage}%</span>
+
+  }
   renderReportDefects(report) {
     return report.categories.map( (category) => {
       var defects = category.defects || [];
       return defects.map( (defect, index) => {
         return (
-          <Card key={index} style={style}>
-            <CardHeader title={category.id + ' ' + category.title} />
-            <CardMedia>
+          <div className="defect-preview">
+            <div className="image">
               <img id="image" ref="preview" src={defect.image} alt="Kuva"/>
-            </CardMedia>
-            <CardTitle title={'Vastuu: ' + defect.responsible} subtitle={defect.dateCreated} />
-            <CardText>
-              {defect.defect}
-            </CardText>
-            <CardActions>
-              <FlatButton label="Action1" />
-              <FlatButton label="Action2" />
-            </CardActions>
-        </Card>
+            </div>
+            <div className="details">
+              <table>
+                <thead></thead>
+                <tbody>
+                  <tr>
+                    <td>Vastuu</td>
+                    <td>{defect.responsible}</td>
+                  </tr>
+                  <tr>
+                    <td>Kuvaus</td>
+                    <td>{defect.description}</td>
+                  </tr>
+                  <tr>
+                    <td>Muuta</td>
+                    <td>{defect.misc}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
         )
       })
     })

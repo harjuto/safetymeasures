@@ -30,19 +30,19 @@ export default class ReportSection extends React.Component {
             <ButtonGroup label="Oikein" typeClass="correct" action={this.incrementCorrect} undoAction={this.decrementCorrect} value={this.props.category.correct} />
           </div>
           <div className="function decrement">
-            <ButtonGroup label="Väärin" typeClass="defect" action={() => {history.push("/report/new/defect/" + category.id ); return false; }} undoAction={this.removeDefect} value={this.props.category.defects.length}/>
+            <ButtonGroup label="Väärin" typeClass="defect" action={(e) => {history.push("/report/new/defect/" + category.id ); return false; }} undoAction={this.removeDefect} value={this.props.category.defects.length}/>
         </div>
         </div>
       </div>
     )
   }
 
-  incrementCorrect() {
+  incrementCorrect(e) {
     this.props.dispatch(incrementCorrect(this.props.category));
     return false;
   }
 
-  decrementCorrect() {
+  decrementCorrect(e) {
     this.props.dispatch(decrementCorrect(this.props.category));
     return false;
   }
@@ -52,13 +52,3 @@ export default class ReportSection extends React.Component {
     return false;
   }
 }
-
-// <RaisedButton
-//   style={style.incrementButton}
-//   label="Väärin"
-//   linkButton={false}
-//   primary={true}
-//   icon={<span>{category.defects.length}</span>}
-//   onMouseUp={ () => history.push("/report/new/defect/" + category.id ) }
-//   onTouchEnd={() => history.push("/report/new/defect/" + category.id ) }
-// />

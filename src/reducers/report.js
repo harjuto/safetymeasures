@@ -60,7 +60,11 @@ export default (state = initialState, action) => {
       var clonedState = clone(state);
       clonedState.info = Object.assign({}, clonedState.info, action.data)
       return clonedState;
+      
+    case SUBMIT_REPORT: {
+      return initialState;
     }
+
     default:
       return state;
   }

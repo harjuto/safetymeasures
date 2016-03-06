@@ -39,7 +39,7 @@ class List extends React.Component {
         </table>
         <hr/>
         <div className="footer">
-          <RaisedButton label="Uusi raportti" secondary={true} onMouseUp={ (e) => {history.push('report/new'); return false;} } onTouchEnd={ (e) => {history.push('report/new'); return false }} />
+          <RaisedButton label="Uusi raportti" secondary={true} onMouseUp={ (e) => {history.push('report/new'); return false;} } />
         </div>
       </div>
     )

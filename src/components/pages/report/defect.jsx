@@ -65,14 +65,14 @@ class Defect extends React.Component {
           </label>
         </div>
         <div className="footer">
-          <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submitForm } onTouchEnd={ this.submitForm } />
-          <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => { history.push('/report/new'); return false; }} onTouchEnd={ () => {history.push('/report/new'); return false; }}/>
+          <RaisedButton label="Tallenna" secondary={true} onMouseUp={ this.submitForm } />
+          <RaisedButton label="Peruuta" primary={true} onMouseUp={ (e) => { history.push('/report/new'); return false; }}/>
         </div>
       </div>
     )
   }
 
-  handleChange(event) {
+  handleChange(e) {
     this.props.dispatch(defectDataChanged({
       [event.target.id]: event.target.value
     }))

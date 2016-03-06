@@ -76,14 +76,14 @@ class Report extends React.Component {
           <hr/>
         </div>
         <div className="footer">
-          <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submit } onTouchEnd={ this.submit } />
-          <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => {history.push('/'); return false;}} onTouchEnd={ () => {history.push('/'); return false;}} />
+          <RaisedButton label="Tallenna" secondary={true} onMouseUp={ this.submit } />
+          <RaisedButton label="Peruuta" primary={true} onMouseUp={ (e) => {history.push('/'); return false;}} />
         </div>
     </div>
     )
   }
 
-  handleChange(event) {
+  handleChange(e) {
     this.props.dispatch(reportDataChanged({
       [event.target.id]: event.target.value
     }))
@@ -105,7 +105,7 @@ class Report extends React.Component {
     return wrong;
   }
 
-  submit() {
+  submit(e) {
     var data = {
       info: this.props.report.info,
       categories: this.props.report.categories

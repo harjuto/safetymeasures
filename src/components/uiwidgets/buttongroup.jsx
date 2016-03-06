@@ -8,10 +8,10 @@ export default class ButtonGroup extends React.Component {
 
     return (
       <div className={"action-button-group"} >
-        <div className="addon" onMouseUp={undoAction} onTouchEnd={undoAction}>
+        <div className="addon" onMouseUp={undoAction}>
           <span><UndoIcon /></span>
         </div>
-        <div className={"button " + typeClass} onMouseUp={action} onTouchEnd={action}>
+        <div className={"button " + typeClass} onMouseUp={action}>
           <span className="value">{value}</span>
           <span>{label}</span>
         </div>

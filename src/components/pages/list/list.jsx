@@ -5,14 +5,10 @@ import ListItem from './listitem';
 import {Link} from 'react-router';
 import { connect } from 'react-redux';
 import history from '../../../utilities/history';
-import Table from 'material-ui/lib/table/table';
-import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
-import TableRow from 'material-ui/lib/table/table-row';
-import TableHeader from 'material-ui/lib/table/table-header';
-import TableRowColumn from 'material-ui/lib/table/table-row-column';
-import TableBody from 'material-ui/lib/table/table-body';
+import _ from 'lodash';
 import RaisedButton from 'material-ui/lib/raised-button';
 import {listMeasurements} from '../../../actions/measurement';
+import Percentage from '../../uiwidgets/percentage';
 
 class List extends React.Component {
 
@@ -28,22 +24,23 @@ class List extends React.Component {
   render() {
     return (
       <div id="list">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHeaderColumn>Päiväys</TableHeaderColumn>
-              <TableHeaderColumn>Oikein</TableHeaderColumn>
-              <TableHeaderColumn>Väärin</TableHeaderColumn>
-              <TableHeaderColumn></TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
+        <table>
+          <thead>
+            <tr>
+              <th>Päiväys</th>
+              <th>Oikein</th>
+              <th>Väärin</th>
+              <th>Oikein %</th>
+            </tr>
+          </thead>
+          <tbody>
             {this.renderRows()}
-          </TableBody>
-        </Table>
-
+          </tbody>
+        </table>
         <hr/>
-        <RaisedButton label="Uusi raportti" secondary={true} onMouseDown={ () => history.push('report/new') } onTouchEnd={ () => history.push('report/new') } />
+        <div className="footer">
+          <RaisedButton label="Uusi raportti" secondary={true} onMouseDown={ () => history.push('report/new') } onTouchEnd={ () => history.push('report/new') } />
+        </div>
       </div>
     )
   }
@@ -51,13 +48,16 @@ class List extends React.Component {
 
   renderRows() {
     return this.props.list.items.map( (entry, index) => {
+      let totalCorrect = this.calculateCorrect(entry)
+      let totalWrong = this.calculateWrong(entry)
+      let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);
       return (
-        <TableRow key={index}>
-          <TableRowColumn>{moment(entry.createdAt).format('DD.MM.YYYY')}</TableRowColumn>
-          <TableRowColumn>{this.calculateCorrect(entry)}</TableRowColumn>
-          <TableRowColumn>{this.calculateWrong(entry)}</TableRowColumn>
-          <TableRowColumn><span className="button-icon chart-button" onClick={this.showSummary.bind(this,entry._id)}></span></TableRowColumn>
-        </TableRow>
+        <tr key={index} onClick={this.showSummary.bind(this,entry._id)}>
+          <td>{moment(entry.createdAt).format('DD.MM.YYYY')}</td>
+          <td>{totalCorrect}</td>
+          <td>{totalWrong}</td>
+          <td><Percentage percentage={totalPercentage}/></td>
+        </tr>
       )
 
     })

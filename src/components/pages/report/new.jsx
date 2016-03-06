@@ -11,6 +11,7 @@ import TextField from 'material-ui/lib/text-field';
 import Divider from 'material-ui/lib/divider';
 import Paper from 'material-ui/lib/paper';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
+import Percentage from '../../uiwidgets/percentage';
 
 const style = {
   marginLeft: 20,
@@ -64,7 +65,7 @@ class Report extends React.Component {
         <div className="categories-total">
           <span>Oikein: {totalCorrect}</span>
           <span>Väärin: {totalWrong}</span>
-          <span>Oikein %: {totalPercentage}</span>
+          <Percentage percentage={totalPercentage} />
         </div>
         <div className="categories">
           {report.categories.map( (category, index) => {
@@ -74,7 +75,7 @@ class Report extends React.Component {
           })}
           <hr/>
         </div>
-        <div className="sticky-buttons">
+        <div className="footer">
           <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submit } onTouchEnd={ this.submit } />
           <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => history.push('/') } onTouchEnd={ () => history.push('/') } />
         </div>

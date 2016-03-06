@@ -25,14 +25,16 @@ export default class ToolBar extends React.Component {
       return null
     }
     return (
-      <Toolbar>
-        <ToolbarGroup float="right">
-          <ToolbarTitle text={auth.password.email} />
-             <IconButton onTouchEnd={this.logout} onMouseDown={this.logout}>
-               <ExitAppButton />
-             </IconButton>
-        </ToolbarGroup>
-      </Toolbar>
+      <div className="toolbar">
+        <Toolbar>
+          <ToolbarGroup float="right">
+            <ToolbarTitle text={auth.password.email} />
+               <IconButton onTouchEnd={this.logout} onMouseDown={this.logout}>
+                 <ExitAppButton />
+               </IconButton>
+          </ToolbarGroup>
+        </Toolbar>
+      </div>
     )
   }
 

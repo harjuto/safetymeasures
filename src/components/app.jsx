@@ -19,7 +19,9 @@ class App extends React.Component {
     return (
       <div className="container">
           <ToolBar auth={this.props.root.auth} dispatch={this.props.dispatch}/>
-         {this.props.children}
+          <div className="page-content">
+            {this.props.children}
+          </div>
       </div>
     )
   }

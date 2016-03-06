@@ -48,11 +48,6 @@ class Defect extends React.Component {
                 <img id="image-preview" ref="preview" src=""/>
               </Paper>
             </div>
-            <div className='file-upload'>
-              <label for="image" className='button-icon camera-button'>
-                <input type="file" id="image" ref="image" accept="image/*;capture=camera" />
-              </label>
-            </div>
           </div>
 
           <Paper zDepth={2}>
@@ -64,9 +59,15 @@ class Defect extends React.Component {
             <Divider />
           </Paper>
         </div>
-
-        <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submitForm } onTouchEnd={ this.submitForm } />
-        <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => history.push('/report/new') } onTouchEnd={ () => history.push('/report/new') }/>
+        <div className='file-upload'>
+          <label for="image" className='button-icon camera-button'>
+            <input type="file" id="image" ref="image" accept="image/*;capture=camera" />
+          </label>
+        </div>
+        <div className="footer">
+          <RaisedButton label="Tallenna" secondary={true} onMouseDown={ this.submitForm } onTouchEnd={ this.submitForm } />
+          <RaisedButton label="Peruuta" primary={true} onMouseDown={ () => history.push('/report/new') } onTouchEnd={ () => history.push('/report/new') }/>
+        </div>
       </div>
     )
   }

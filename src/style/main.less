@@ -3,7 +3,34 @@ body {
   font-size: @normal-font-size;
   width: 100%;
   margin: 0;
-  .container {
 
+  .toolbar {
+    position: fixed;
+    z-index: 10;
+    top:0;
+    height: 60px;
+    left: 0;
+    right: 0;
+  }
+  .container {
+    .page-content {
+      position: absolute;
+      top: 60px;
+      left:0;
+      right: 0;
+      margin-bottom: 60px;
+    }
+
+    .footer {
+      position: fixed;
+      bottom:0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: @color-toolbar-gray;
+    }
   }
 }

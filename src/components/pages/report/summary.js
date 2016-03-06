@@ -2,11 +2,7 @@ import React from 'react';
 import lodash from 'lodash';
 import { connect } from 'react-redux';
 import history from '../../../utilities/history';
-import Card from 'material-ui/lib/card/card';
-import CardActions from 'material-ui/lib/card/card-actions';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardMedia from 'material-ui/lib/card/card-media';
-import CardTitle from 'material-ui/lib/card/card-title';
+import Percentage from '../../uiwidgets/percentage';
 import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import CardText from 'material-ui/lib/card/card-text';
@@ -64,50 +60,47 @@ class Summary extends React.Component {
                 <th>Kategoria</th>
                 <th>Oikein</th>
                 <th>Väärin</th>
+                <th>Oikein %</th>
               </tr>
             </thead>
             <tbody>
               {report.categories.map( (category, index) => {
+                let wrong = category.defects ? category.defects.length : 0;
+                let correct = category.correct;
+                let categoryPercentage = _.toInteger(( correct / (correct + wrong) ) * 100);
                 return (
                   <tr key={index}>
                     <td>
                       {category.title}
                     </td>
-                    <td>{category.correct} </td>
-                    <td>{category.defects ? category.defects.length : 0}</td>
+                    <td>{correct}</td>
+                    <td>{wrong}</td>
+                    <td><Percentage percentage={categoryPercentage}/></td>
                   </tr>
                 )
               })}
+              <tr className="total">
+                <td>Yhteensä: </td>
+                <td>{totalCorrect}</td>
+                <td>{totalWrong}</td>
+                <td>
+                  <Percentage percentage={totalPercentage} />
+                </td>
+              </tr>
             </tbody>
           </table>
-          <div className="categories-total">
-            <span>Oikein: {totalCorrect}</span>
-            <span>Väärin: {totalWrong}</span>
-            {this.renderCorrect(totalPercentage)}
-          </div>
-
-
         <hr />
         <h3>Virheet</h3>
         <div>
           {this.renderReportDefects(report)}
         </div>
-
-        <RaisedButton label="Takaisin" onMouseDown={ () => history.push('/') } onTouchEnd={ () => history.push('/') } />
+        <div className="footer">
+          <RaisedButton label="Takaisin" onMouseDown={ () => history.push('/') } onTouchEnd={ () => history.push('/') } />
+        </div>
       </div>
     )
   }
 
-  renderCorrect(percentage) {
-    var style = {}
-    if(percentage >= 85) {
-      style.color = "green"
-    } else if(pecentage < 85) {
-      style.color = red;
-    }
-    return <span style={style}>Oikein: {percentage}%</span>
-
-  }
   renderReportDefects(report) {
     return report.categories.map( (category) => {
       var defects = category.defects || [];

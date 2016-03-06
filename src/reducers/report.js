@@ -51,20 +51,19 @@ export default (state = initialState, action) => {
       category.defects.pop();
       return clonedState;
 
-    case DEFECT_DATA_CHANGED: {
+    case DEFECT_DATA_CHANGED:
       var clonedState = clone(state);
       clonedState.defectTemplate = Object.assign({}, clonedState.defectTemplate, action.data);
       return clonedState;
-    }
-    case REPORT_DATA_CHANGED: {
+
+    case REPORT_DATA_CHANGED:
       var clonedState = clone(state);
       clonedState.info = Object.assign({}, clonedState.info, action.data)
       return clonedState;
-      
-    case SUBMIT_REPORT: {
-      return initialState;
-    }
 
+    case SUBMIT_REPORT:
+      return initialState;
+    
     default:
       return state;
   }

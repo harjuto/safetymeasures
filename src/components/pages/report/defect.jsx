@@ -115,7 +115,7 @@ class Defect extends React.Component {
   get_signed_request(file){
       var _this = this;
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", "http://localhost:1337/api/sign_s3?file_name="+file.name+"&file_type="+file.type);
+      xhr.open("GET", "http://localhost/api/sign_s3?file_name="+file.name+"&file_type="+file.type);
       xhr.onreadystatechange = function(){
           if(xhr.readyState === 4){
               if(xhr.status === 200){

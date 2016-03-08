@@ -11,6 +11,6 @@ var path = require('path');
 
 app.use(cors());
 // gzip
-app.get('/sign_s3', require('./src/amazon'));
+app.get('/api/sign_s3', require('./src/amazon'));
 
 server.listen(1337);

@@ -1,5 +1,4 @@
 'use strict'
-var Measurement = require('./src/models/measurement');
 var express = require('express');
 var compression = require('compression');
 var cors = require('cors');

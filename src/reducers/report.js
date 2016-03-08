@@ -63,7 +63,7 @@ export default (state = initialState, action) => {
 
     case SUBMIT_REPORT:
       return initialState;
-    
+
     default:
       return state;
   }

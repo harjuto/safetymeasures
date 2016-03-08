@@ -42,3 +42,17 @@ tr.total {
     border: none;
   }
 }
+
+@media print {
+  .toolbar {
+    display: none;
+    visibility: hidden;
+  }
+  #pdf-container {
+      .footer {
+        display: none;
+        visibility: hidden;
+      }
+
+  }
+}

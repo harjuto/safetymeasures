@@ -9,8 +9,7 @@ import CardText from 'material-ui/lib/card/card-text';
 import Paper from 'material-ui/lib/paper';
 import TextField from 'material-ui/lib/text-field';
 import Divider from 'material-ui/lib/divider';
-import DatePicker from 'material-ui/lib/date-picker/date-picker';
-import moment from 'moment';
+import PrintIcon from 'material-ui/lib/svg-icons/action/print';
 
 const style = {
   marginLeft: 20,
@@ -26,8 +25,9 @@ class Summary extends React.Component {
     });
     let totalCorrect = this.calculateCorrect(report);
     let totalWrong = this.calculateWrong(report);
-    let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);    return (
-      <div>
+    let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);
+      return (
+        <div id="pdf-container">
         <h3>Yhteenveto</h3>
           <table>
             <thead></thead>
@@ -96,6 +96,7 @@ class Summary extends React.Component {
         </div>
         <div className="footer">
           <RaisedButton label="Takaisin" onMouseUp={ (e) => {history.push('/'); return false;} } />
+          <RaisedButton label="Tulosta PDF" onClick={ window.print } icon={<PrintIcon/>} />
         </div>
       </div>
     )

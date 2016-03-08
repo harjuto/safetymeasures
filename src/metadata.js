@@ -6,7 +6,7 @@ var meta = {
     image: ''
   },
   info: {
-    contractor: '',
+    contractor: 'Pelti-Ässät Oy',
     foreman: '',
     sitename: '',
     measurer: '',

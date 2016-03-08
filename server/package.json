@@ -16,7 +16,7 @@
     "cors": "^2.7.1",
     "express": "^4.13.4",
     "firebase": "^2.4.1",
-    "method-override": "~2.0.2",
+    "method-override": "~2.0.2"
   },
   "dependencies": {
   }

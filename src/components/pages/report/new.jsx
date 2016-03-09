@@ -76,8 +76,8 @@ class Report extends React.Component {
           <hr/>
         </div>
         <div className="footer">
-          <RaisedButton label="Tallenna" secondary={true} onMouseUp={ this.submit } />
-          <RaisedButton label="Peruuta" primary={true} onMouseUp={ (e) => {history.push('/'); return false;}} />
+          <RaisedButton label="Tallenna" secondary={true} onClick={ this.submit } />
+          <RaisedButton label="Peruuta" primary={true} onClick={ (e) => {history.push('/'); return false;}} />
         </div>
     </div>
     )
@@ -85,7 +85,7 @@ class Report extends React.Component {
 
   handleChange(e) {
     this.props.dispatch(reportDataChanged({
-      [event.target.id]: event.target.value
+      [e.target.id]: e.target.value
     }))
   }
 

@@ -95,7 +95,7 @@ class Summary extends React.Component {
           {this.renderReportDefects(report)}
         </div>
         <div className="footer">
-          <RaisedButton label="Takaisin" onMouseUp={ (e) => {history.push('/'); return false;} } />
+          <RaisedButton label="Takaisin" onClick={ (e) => {history.push('/'); return false;} } />
           <RaisedButton label="Tulosta PDF" onClick={ window.print } icon={<PrintIcon/>} />
         </div>
       </div>

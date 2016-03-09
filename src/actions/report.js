@@ -8,13 +8,19 @@ export const SUBMIT_DEFECT = 'SUBMIT_DEFECT';
 export const REMOVE_DEFECT = 'REMOVE_DEFECT';
 export const DEFECT_DATA_CHANGED = 'DEFECT_DATA_CHANGED';
 export const REPORT_DATA_CHANGED = 'REPORT_DATA_CHANGED';
+export const CLEAR_REPORT = 'CLEAR_REPORT';
 
 export function submitReport(report) {
   return dispatch => {
+    dispatch(clearReport())
     firebase.saveReport(report)
   }
 }
-
+export function clearReport() {
+  return {
+    type: CLEAR_REPORT
+  }
+}
 export function reportDataChanged(data) {
   return {
     type: REPORT_DATA_CHANGED,

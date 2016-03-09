@@ -65,8 +65,8 @@ class Defect extends React.Component {
           </label>
         </div>
         <div className="footer">
-          <RaisedButton label="Tallenna" secondary={true} onMouseUp={ this.submitForm } />
-          <RaisedButton label="Peruuta" primary={true} onMouseUp={ (e) => { history.push('/report/new'); return false; }}/>
+          <RaisedButton label="Tallenna" secondary={true} onClick={ this.submitForm } />
+          <RaisedButton label="Peruuta" primary={true} onClick={ (e) => { history.push('/report/new'); return false; }}/>
         </div>
       </div>
     )
@@ -74,7 +74,7 @@ class Defect extends React.Component {
 
   handleChange(e) {
     this.props.dispatch(defectDataChanged({
-      [event.target.id]: event.target.value
+      [e.target.id]: e.target.value
     }))
   }
 
@@ -115,7 +115,7 @@ class Defect extends React.Component {
   get_signed_request(file){
       var _this = this;
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", "http://localhost/api/sign_s3?file_name="+file.name+"&file_type="+file.type);
+      xhr.open("GET", "/api/sign_s3?file_name="+file.name+"&file_type="+file.type);
       xhr.onreadystatechange = function(){
           if(xhr.readyState === 4){
               if(xhr.status === 200){

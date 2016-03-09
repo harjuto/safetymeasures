@@ -39,7 +39,7 @@ class List extends React.Component {
         </table>
         <hr/>
         <div className="footer">
-          <RaisedButton label="Uusi raportti" secondary={true} onMouseUp={ (e) => {history.push('report/new'); return false;} } />
+          <RaisedButton label="Uusi raportti" secondary={true} onClick={ (e) => {history.push('report/new'); return false;} } />
         </div>
       </div>
     )
@@ -53,7 +53,7 @@ class List extends React.Component {
       let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);
       return (
         <tr key={index} onClick={this.showSummary.bind(this,entry._id)}>
-          <td>{moment(entry.createdAt).format('DD.MM.YYYY')}</td>
+          <td>{moment(entry.info.date).format('DD.MM.YYYY')}</td>
           <td>{totalCorrect}</td>
           <td>{totalWrong}</td>
           <td><Percentage percentage={totalPercentage}/></td>
@@ -87,7 +87,6 @@ class List extends React.Component {
 
 
 function mapStateToProps(state){
-console.info(state)
   return {
     list: state.listReducer
   }

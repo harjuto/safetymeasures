@@ -6,7 +6,8 @@ import {
   REMOVE_DEFECT,
   DEFECT_DATA_CHANGED,
   SUBMIT_REPORT,
-  REPORT_DATA_CHANGED } from '../actions/report';
+  REPORT_DATA_CHANGED,
+  CLEAR_REPORT } from '../actions/report';
 
 import _ from 'lodash';
 import reportMetadata from '../metadata';
@@ -61,7 +62,9 @@ export default (state = initialState, action) => {
       clonedState.info = Object.assign({}, clonedState.info, action.data)
       return clonedState;
 
-    case SUBMIT_REPORT:
+    case CLEAR_REPORT:
+      console.info('Repport cleared')
+      console.info(initialState);
       return initialState;
 
     default:

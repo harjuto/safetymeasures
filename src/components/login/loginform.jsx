@@ -24,7 +24,7 @@ class LoginForm extends React.Component {
     if(loginInProgress) {
       buttonElement =  <CircularProgress />
     } else {
-      buttonElement = <RaisedButton label="Kirjaudu" secondary={true} onMouseDown={ this.login } onTouchEnd={ this.login } />
+      buttonElement = <RaisedButton label="Kirjaudu" secondary={true} onClick={ this.login } />
     }
     return (
       <div className="login-page">

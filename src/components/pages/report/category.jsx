@@ -26,12 +26,12 @@ export default class ReportSection extends React.Component {
           {category.title}
         </div>
         <div className="category-functions">
+          <div className="function decrement">
+            <ButtonGroup label="Väärin" typeClass="defect" action={(e) => {history.push("/report/new/defect/" + category.id ); return false; }} undoAction={this.removeDefect} value={this.props.category.defects.length}/>
+          </div>
           <div className="function increment">
             <ButtonGroup label="Oikein" typeClass="correct" action={this.incrementCorrect} undoAction={this.decrementCorrect} value={this.props.category.correct} />
           </div>
-          <div className="function decrement">
-            <ButtonGroup label="Väärin" typeClass="defect" action={(e) => {history.push("/report/new/defect/" + category.id ); return false; }} undoAction={this.removeDefect} value={this.props.category.defects.length}/>
-        </div>
         </div>
       </div>
     )

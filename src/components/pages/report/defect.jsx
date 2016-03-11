@@ -43,11 +43,7 @@ class Defect extends React.Component {
       <div>
         <div>
           <div className='image-preview-container'>
-            <div className='image-preview'>
-              <Paper  zDepth={4}>
-                <img id="image-preview" ref="preview" src=""/>
-              </Paper>
-            </div>
+            <img id="image-preview" ref="preview" src=""/>
           </div>
 
           <Paper zDepth={2}>
@@ -100,7 +96,7 @@ class Defect extends React.Component {
       xhr.setRequestHeader('x-amz-acl', 'public-read');
       xhr.onload = function() {
           if (xhr.status === 200) {
-              document.getElementById("image-preview").src = url;
+              document.getElementById("image-preview").style.backgroundImage = "url('"+url+"')";
               _this.props.dispatch(defectDataChanged({
                 'image': url
               }))

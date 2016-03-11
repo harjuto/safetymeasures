@@ -19,7 +19,6 @@ class LoginForm extends React.Component {
 
   render() {
     const { username, password, loginInProgress, message } = this.props.login;
-    console.info('HELLO FROM LOGIN FORM')
     var buttonElement;
     if(loginInProgress) {
       buttonElement =  <CircularProgress />

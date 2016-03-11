@@ -19,9 +19,7 @@ module.exports = {
     path: PATHS.build,
     filename: 'bundle.min.js'
   },
-  externals: {
-    'react-tap-event-plugin': 'injectTapEventPlugin'
-  },
+
   module: {
     loaders: [
       {
@@ -53,7 +51,14 @@ module.exports = {
 
     // Display only errors to reduce the amount of output.
     stats: 'errors-only',
-
+    proxy: {
+      '/api/*': {
+        target: 'http://localhost:1337',
+      },
+      '/report/*': {
+        target: 'http://localhost:8080'
+      }
+    },
     // Parse host and port from env so this is easy to customize.
     //host: process.env.HOST,
     port: "8080"
@@ -65,10 +70,6 @@ module.exports = {
     //  template: './src/index.tpl.html'
     //}),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery"
-    }),
-    //new webpack.optimize.UglifyJsPlugin({minimize: true})
+    new webpack.optimize.UglifyJsPlugin({minimize: true})
   ]
 };

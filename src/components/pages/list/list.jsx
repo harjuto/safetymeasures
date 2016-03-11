@@ -9,6 +9,7 @@ import _ from 'lodash';
 import RaisedButton from 'material-ui/lib/raised-button';
 import {listMeasurements} from '../../../actions/measurement';
 import Percentage from '../../uiwidgets/percentage';
+import CircularProgress from 'material-ui/lib/circular-progress';
 
 class List extends React.Component {
 
@@ -22,8 +23,14 @@ class List extends React.Component {
   }
 
   render() {
+    let Spinner = null
+    if(this.props.list.loading) {
+      Spinner = <CircularProgress />
+
+    }
     return (
       <div id="list">
+        {Spinner}
         <table>
           <thead>
             <tr>

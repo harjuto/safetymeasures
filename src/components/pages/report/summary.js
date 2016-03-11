@@ -108,27 +108,34 @@ class Summary extends React.Component {
       return defects.map( (defect, index) => {
         return (
           <div className="defect-preview">
-            <div className="image">
-              <img id="image" ref="preview" src={defect.image} alt="Kuva"/>
+            <div className="left">
+              <div className="title">
+                {category.id}.{category.title}
+              </div>
+              <div className="image" style={style}>
+                <img id="image" ref="preview" src={defect.image} alt="Kuva"/>
+              </div>
             </div>
-            <div className="details">
-              <table>
-                <thead></thead>
-                <tbody>
-                  <tr>
-                    <td>Vastuu</td>
-                    <td>{defect.responsible}</td>
-                  </tr>
-                  <tr>
-                    <td>Kuvaus</td>
-                    <td>{defect.description}</td>
-                  </tr>
-                  <tr>
-                    <td>Muuta</td>
-                    <td>{defect.misc}</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="right">
+              <div className="details">
+                <table>
+                  <thead></thead>
+                  <tbody>
+                    <tr>
+                      <td>Vastuu</td>
+                      <td>{defect.responsible}</td>
+                    </tr>
+                    <tr>
+                      <td>Kuvaus</td>
+                      <td>{defect.description}</td>
+                    </tr>
+                    <tr>
+                      <td>Muuta</td>
+                      <td>{defect.misc}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 

@@ -14,15 +14,23 @@ table {
 .defect-preview {
   display: flex;
   margin-bottom: 30px;
+  @media(max-width: 765px) {
+    flex-direction: column;
+  }
+  .left {
+    flex: 1;
+  }
+  .right {
+    flex: 1;
+  }
+
   .image {
-    flex: 2;
     margin-right: 30px;
     img {
       width: 100%
     }
   }
   .details {
-    flex: 5;
     table {
       tr {
         td:first-child {

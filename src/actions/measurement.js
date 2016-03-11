@@ -1,8 +1,10 @@
 import firebase from '../utilities/firebase';
 export const RECEIVE_MEASUREMENTS = "RECEIVE_MEASUREMENTS";
+export const FETCHING_MEASUREMENTS = "FETCHING_MEASUREMENTS";
 
 export function listMeasurements() {
   return dispatch => {
+      dispatch(fetchingMeasurements());
       firebase.listMeasurements()
         .then((data) => {
           dispatch(receiveMeasurements(data.val()));
@@ -12,6 +14,11 @@ export function listMeasurements() {
   }
 }
 
+export function fetchingMeasurements() {
+  return {
+    type: FETCHING_MEASUREMENTS
+  }
+}
 export function receiveMeasurements(measurements) {
   return {
     type: RECEIVE_MEASUREMENTS,

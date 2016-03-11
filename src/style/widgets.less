@@ -1,10 +1,13 @@
 .action-button-group {
   display: inline-block;
-  color: #ffffff;
+  color: @color-dark-black;
   height: 70px;
   width: 210px;
+  margin-left: 10px;
   font-size: 25px;
   position: relative;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.12);
+
   &:hover {
     cursor: pointer;
   }
@@ -18,7 +21,6 @@
     display: inline-block;
     height:100%;
     transition: background-color 0.2s ease;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.12);
     text-align: center;
     line-height: 60px;
   }
@@ -30,20 +32,19 @@
     border-bottom-right-radius: 2px;
 
     .value {
-      position: absolute;
-      left: 15px;
+      padding-right: 5px;
       color: @color-dark-black;
       font-weight: bold;
     }
     &.correct {
-      &:active {
-        background-color:@color-positive-green-darker;
+      &:focus, &:active {
+        background-color:@color-light-gray-darker;
       }
-      background-color: @color-positive-green;
+      background-color: @color-light-gray;
     }
 
     &.defect {
-      &:active {
+      &:focus, &:active {
         background-color: @color-caution-orange-darker;
       }
       background-color: @color-caution-orange;
@@ -53,13 +54,15 @@
   .addon {
     left: 0;
     width: 60px;
-    border-right: 1px solid @color-section-separator;
-    background-color: @color-negative-red;
+    border-right: 1px solid @color-white-background;
+    background-color: @color-light-gray;
     padding: 5px;
     border-top-left-radius: 2px;
+    line-height: 74px;
     border-bottom-left-radius: 2px;
     &:active {
-      background-color:@color-negative-red-darker;
+      background-color:@color-light-gray-darker;
     }
   }
+
 }

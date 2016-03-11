@@ -62,11 +62,7 @@ class Report extends React.Component {
             <Divider />
           </Paper>
         </div>
-        <div className="categories-total">
-          <span>Oikein: {totalCorrect}</span>
-          <span>Väärin: {totalWrong}</span>
-          <Percentage percentage={totalPercentage} />
-        </div>
+
         <div className="categories">
           {report.categories.map( (category, index) => {
             return (
@@ -78,6 +74,11 @@ class Report extends React.Component {
         <div className="footer">
           <RaisedButton label="Tallenna" secondary={true} onClick={ this.submit } />
           <RaisedButton label="Peruuta" primary={true} onClick={ (e) => {history.push('/'); return false;}} />
+            <div className="categories-total">
+              <span>Oikein: {totalCorrect}</span>
+              <span>Väärin: {totalWrong}</span>
+              <Percentage percentage={totalPercentage} />
+            </div>
         </div>
     </div>
     )

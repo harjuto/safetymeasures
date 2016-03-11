@@ -1,25 +1,30 @@
-import {RECEIVE_MEASUREMENTS} from '../actions/measurement'
+import {
+  RECEIVE_MEASUREMENTS,
+  FETCHING_MEASUREMENTS
+} from '../actions/measurement'
 import _ from 'lodash';
 import {SUBMIT_REPORT} from '../actions/report';
 
 
 const initialState = {
+  loading: false,
   items: []
 };
 
 
 export default (state = initialState, action) => {
   switch(action.type){
-
+    case FETCHING_MEASUREMENTS: {
+      return Object.assign({}, state, {loading:true})
+    }
     case RECEIVE_MEASUREMENTS: {
       var items = [];
-      console.info(action.measurements)
        _.mapValues(action.measurements, (object, key) => {
          object._id = key;
          items.push(object)
       })
-      console.info(items);
       return Object.assign({}, state, {
+        loading: false,
         items: [].concat(items)
       })
     }

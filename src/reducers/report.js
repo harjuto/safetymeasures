@@ -15,12 +15,12 @@ import reportMetadata from '../metadata';
 const initialState = reportMetadata;
 
 function clone(state) {
-  var clonedState = Object.assign({}, state)
+  var clonedState = Object.assign({}, state);
   clonedState.categories = state.categories.map( category => {
     return Object.assign({}, category, {
       defects: [].concat(category.defects)
     })
-  })
+  });
   return clonedState;
 }
 
@@ -59,12 +59,9 @@ export default (state = initialState, action) => {
 
     case REPORT_DATA_CHANGED:
       var clonedState = clone(state);
-      clonedState.info = Object.assign({}, clonedState.info, action.data)
-      return clonedState;
+      return Object.assign(clonedState, action.data);
 
     case CLEAR_REPORT:
-      console.info('Repport cleared')
-      console.info(initialState);
       return initialState;
 
     default:

@@ -1,4 +1,3 @@
-import socketmanager from '../utilities/socketmanager';
 import actions from '../../shared/actions';
 import firebase from '../utilities/firebase';
 
@@ -12,7 +11,7 @@ export const CLEAR_REPORT = 'CLEAR_REPORT';
 
 export function submitReport(report) {
   return dispatch => {
-    dispatch(clearReport())
+    dispatch(clearReport());
     firebase.saveReport(report)
   }
 }

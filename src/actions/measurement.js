@@ -2,10 +2,10 @@ import firebase from '../utilities/firebase';
 export const RECEIVE_MEASUREMENTS = "RECEIVE_MEASUREMENTS";
 export const FETCHING_MEASUREMENTS = "FETCHING_MEASUREMENTS";
 
-export function listMeasurements() {
+export function listMeasurements(pagination) {
   return dispatch => {
       dispatch(fetchingMeasurements());
-      firebase.listMeasurements()
+      firebase.listMeasurements(pagination)
         .then((data) => {
           dispatch(receiveMeasurements(data.val()));
         },(error) => {

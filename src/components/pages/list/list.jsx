@@ -14,7 +14,7 @@ import CircularProgress from 'material-ui/lib/circular-progress';
 class List extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch(listMeasurements())
+    this.props.dispatch(listMeasurements(this.props.list.pagination))
   }
 
   constructor() {
@@ -23,7 +23,7 @@ class List extends React.Component {
   }
 
   render() {
-    let Spinner = null
+    let Spinner = null;
     if(this.props.list.loading) {
       Spinner = <CircularProgress />
 
@@ -55,12 +55,12 @@ class List extends React.Component {
 
   renderRows() {
     return this.props.list.items.map( (entry, index) => {
-      let totalCorrect = this.calculateCorrect(entry)
-      let totalWrong = this.calculateWrong(entry)
+      let totalCorrect = this.calculateCorrect(entry);
+      let totalWrong = this.calculateWrong(entry);
       let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);
       return (
         <tr key={index} onClick={this.showSummary.bind(this,entry._id)}>
-          <td>{moment(entry.info.date).format('DD.MM.YYYY')}</td>
+          <td>{moment(entry.date).format('DD.MM.YYYY')}</td>
           <td>{totalCorrect}</td>
           <td>{totalWrong}</td>
           <td><Percentage percentage={totalPercentage}/></td>
@@ -73,7 +73,7 @@ class List extends React.Component {
     let wrong = 0;
     entry.categories.forEach( (category) => {
       wrong += category.defects ? category.defects.length : 0;
-    })
+    });
     return wrong;
   }
 
@@ -81,7 +81,7 @@ class List extends React.Component {
     let correct = 0;
     entry.categories.forEach( (category) => {
       correct += category.correct;
-    })
+    });
     return correct;
   }
 

@@ -5,13 +5,13 @@ var meta = {
     misc: '',
     image: ''
   },
-  info: {
-    contractor: 'Pelti-Ässät Oy',
-    foreman: '',
-    sitename: '',
-    measurer: '',
-    date: ''
-  },
+
+  contractor: 'Pelti-Ässät Oy',
+  foreman: '',
+  sitename: '',
+  measurer: '',
+  date: '',
+
   categories: [
     {
       id: 1,

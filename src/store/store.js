@@ -10,6 +10,7 @@ const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware // lets us dispatch() functions
 )(createStore);
 
+
 const combinedReducer = combineReducers({
   rootReducer,
   listReducer,

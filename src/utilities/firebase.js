@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import {loggedOut} from '../actions/login';
+import moment from 'moment';
 
 class FirebaseConnector {
 
@@ -29,17 +30,21 @@ class FirebaseConnector {
   //Database functionality
 
   listMeasurements() {
-    var ref = this.firebase.child("measurements");
-    return ref.orderByKey().once("value")
+    var startDate = moment().startOf('month');
+    var endDate = moment().endOf('month');
+    console.info(startDate.format('YYYY-DD-MM'));
+    console.info(endDate.format('YYYY-DD-MM'));
+
+    return this.firebase.child("measurements")
+      .orderByChild("date")
+      .startAt(startDate.format('YYYY-DD-MM'))
+      .endAt(endDate.format('YYYY-DD-MM'))
+      .once("value")
   }
 
   saveReport(report) {
-    console.info('Saving to firebase')
-    console.info(report);
     var ref = this.firebase.child("measurements");
     var newReportRef = ref.push(report);
-    // var serializedReport = Object.assign({}, newReportRef, report);
-
   }
 }
 

@@ -14,7 +14,7 @@ import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import Percentage from '../../uiwidgets/percentage';
 
 const style = {
-  marginLeft: 20,
+  marginLeft: 20
 };
 
 function dateFormatter(date) {
@@ -30,9 +30,12 @@ class Report extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(reportDataChanged({
-      'date': moment().format('YYYY-DD-MM')
-    }))  }
+    if(!this.props.report.date) {
+      this.props.dispatch(reportDataChanged({
+        'date': moment().format('YYYY-MM-DD')
+      }))
+    }
+  }
 
   render() {
     return (
@@ -50,15 +53,15 @@ class Report extends React.Component {
       <div>
         <div className="info">
           <Paper zDepth={2}>
-            <TextField id="contractor" value={report.info.contractor}  hintText="Urakoitsija" style={style} underlineShow={false} onChange={this.handleChange} />
+            <TextField id="contractor" value={report.contractor}  hintText="Urakoitsija" style={style} underlineShow={false} onChange={this.handleChange} />
             <Divider />
-            <TextField id="foreman" value={report.info.foreman} hintText="Työnjohtaja" style={style} underlineShow={false} onChange={this.handleChange} />
+            <TextField id="foreman" value={report.foreman} hintText="Työnjohtaja" style={style} underlineShow={false} onChange={this.handleChange} />
             <Divider />
-            <TextField id="sitename" value={report.info.sitename}  hintText="Työmaan nimi" style={style} underlineShow={false} onChange={this.handleChange} />
+            <TextField id="sitename" value={report.sitename}  hintText="Työmaan nimi" style={style} underlineShow={false} onChange={this.handleChange} />
             <Divider />
-            <TextField id="measurer" value={report.info.measurer} hintText="Mittaaja" style={style} underlineShow={false} onChange={this.handleChange} />
+            <TextField id="measurer" value={report.measurer} hintText="Mittaaja" style={style} underlineShow={false} onChange={this.handleChange} />
             <Divider />
-            <input id="date" type="date" value={report.info.date} placeholder="Päiväys" onChange={this.handleChange} />
+            <input id="date" type="date" value={report.date} placeholder="Päiväys" onChange={this.handleChange} />
             <Divider />
           </Paper>
         </div>
@@ -94,7 +97,7 @@ class Report extends React.Component {
     let correct = 0;
     report.categories.forEach( (category) => {
       correct += category.correct;
-    })
+    });
     return correct;
   }
 
@@ -102,16 +105,13 @@ class Report extends React.Component {
     let wrong = 0;
     report.categories.forEach( (category) => {
       wrong += category.defects ? category.defects.length : 0;
-    })
+    });
     return wrong;
   }
 
   submit(e) {
-    var data = {
-      info: this.props.report.info,
-      categories: this.props.report.categories
-    }
-    this.props.dispatch(submitReport(data))
+    var data = this.props.report;
+    this.props.dispatch(submitReport(data));
     history.push('/');
     return false;
   }

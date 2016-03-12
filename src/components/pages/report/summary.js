@@ -10,13 +10,11 @@ import Paper from 'material-ui/lib/paper';
 import TextField from 'material-ui/lib/text-field';
 import Divider from 'material-ui/lib/divider';
 import PrintIcon from 'material-ui/lib/svg-icons/action/print';
+import moment from 'moment';
 
 const style = {
   marginLeft: 20,
-}
-function dateFormatter(date) {
-  return moment(date).format('DD.MM.YYYY');
-}
+};
 
 class Summary extends React.Component {
   render() {
@@ -34,23 +32,23 @@ class Summary extends React.Component {
             <tbody>
               <tr>
                 <td>Urakoitsija</td>
-                <td>{report.info.contractor}</td>
+                <td>{report.contractor}</td>
               </tr>
               <tr>
                 <td>Työnjohtaja</td>
-                <td>{report.info.foreman}</td>
+                <td>{report.foreman}</td>
               </tr>
               <tr>
                 <td>Työmaan nimi</td>
-                <td>{report.info.sitename}</td>
+                <td>{report.sitename}</td>
               </tr>
               <tr>
                 <td>Mittaaja</td>
-                <td>{report.info.measurer}</td>
+                <td>{report.measurer}</td>
               </tr>
               <tr>
                 <td>Päiväys</td>
-                <td>{report.info.date}</td>
+                <td>{moment(report.date).format('DD.MM.YYYY')}</td>
               </tr>
             </tbody>
           </table>

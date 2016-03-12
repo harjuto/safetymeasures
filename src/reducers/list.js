@@ -8,6 +8,10 @@ import {SUBMIT_REPORT} from '../actions/report';
 
 const initialState = {
   loading: false,
+  pagination: {
+    from: 0,
+    to: 10
+  },
   items: []
 };
 
@@ -22,7 +26,7 @@ export default (state = initialState, action) => {
        _.mapValues(action.measurements, (object, key) => {
          object._id = key;
          items.push(object)
-      })
+      });
       return Object.assign({}, state, {
         loading: false,
         items: [].concat(items)

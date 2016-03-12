@@ -70,6 +70,6 @@ module.exports = {
     //  template: './src/index.tpl.html'
     //}),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.UglifyJsPlugin({minimize: true})
+    // new webpack.optimize.UglifyJsPlugin({minimize: true})
   ]
 };

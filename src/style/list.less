@@ -1,21 +1,62 @@
-#list{
-  .chart-button {
-    background-image: url('../images/chart_24px.svg');
-  }
-  .header{
-    font-size: @header-font-size;
+.report-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100%;
+
+  & > div {
+    width: 300px;
+    height: 100px;
+    padding: 5px;
+    margin: 5px;
+    position: relative;
     display: flex;
-    div {
-      flex: 1;
+    align-items: center;
+    justify-content: center;
+
+
+    .details {
+      color: @color-text-default;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      .detail {
+        font-size: 0.6em;
+        color: @color-section-text;
+        position: absolute;
+
+        &.top {
+          top: 5px;
+          &.left {
+            left: 5px;
+          }
+          &.right {
+            right: 5px;
+          }
+        }
+        &.bottom {
+          bottom: 5px;
+          &.right {
+            right: 5px;
+          }
+          &.left {
+            left: 5px;
+          }
+        }
+
+
+
+      }
+
+
+      .value {
+        font-size: 0.8em;
+      }
+
     }
-  }
-  .row {
-    display: flex;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    &:hover {
-      background: gray;
-      cursor: pointer;
-    }
+
   }
 }

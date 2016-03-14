@@ -5,7 +5,7 @@ import moment from 'moment';
 class FirebaseConnector {
 
   connect() {
-    this.firebase = new Firebase("https://shining-torch-8422.firebaseio.com/");
+    this.firebase = new Firebase("https://peltiassat.firebaseio.com/");
   }
 
   attachAuthChangeListener(callback) {

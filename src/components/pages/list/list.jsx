@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import {listMeasurements} from '../../../actions/measurement';
 import Percentage from '../../uiwidgets/percentage';
 import CircularProgress from 'material-ui/lib/circular-progress';
+import Paper from 'material-ui/lib/paper';
 
 class List extends React.Component {
 
@@ -29,45 +30,70 @@ class List extends React.Component {
 
     }
     return (
-      <div id="list">
-        {Spinner}
-        <table>
-          <thead>
-            <tr>
-              <th>Päiväys</th>
-              <th>Oikein</th>
-              <th>Väärin</th>
-              <th>Oikein %</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.renderRows()}
-          </tbody>
-        </table>
-        <hr/>
-        <div className="footer">
-          <RaisedButton label="Uusi raportti" secondary={true} onClick={ (e) => {history.push('report/new'); return false;} } />
-        </div>
+      <div>
+        <div className="report-list-container">
+          {this.renderRows()}
+       </div>
+        <RaisedButton label="Uusi raportti" secondary={true} onClick={ (e) => {history.push('report/new'); return false;} } />
+
       </div>
+      //<div id="list">
+      //  {Spinner}
+      //  <table>
+      //    <thead>
+      //      <tr>
+      //        <th>Päiväys</th>
+      //        <th>Oikein</th>
+      //        <th>Väärin</th>
+      //        <th>Oikein %</th>
+      //      </tr>
+      //    </thead>
+      //    <tbody>
+      //      {this.renderRows()}
+      //    </tbody>
+      //  </table>
+      //  <hr/>
+      //  <div className="footer">
+      //    <RaisedButton label="Uusi raportti" secondary={true} onClick={ (e) => {history.push('report/new'); return false;} } />
+      //  </div>
+      //</div>
     )
   }
 
 
   renderRows() {
+
     return this.props.list.items.map( (entry, index) => {
       let totalCorrect = this.calculateCorrect(entry);
       let totalWrong = this.calculateWrong(entry);
       let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);
       return (
-        <tr key={index} onClick={this.showSummary.bind(this,entry._id)}>
-          <td>{moment(entry.date).format('DD.MM.YYYY')}</td>
-          <td>{totalCorrect}</td>
-          <td>{totalWrong}</td>
-          <td><Percentage percentage={totalPercentage}/></td>
-        </tr>
+        <Paper zDepth={1} onClick={this.showSummary.bind(this,entry._id)}>
+          <div className="details">
+            <div className="detail top left">{moment(entry.date).format('DD.MM.YYYY')}</div>
+            <div className="detail top right">{entry.contractor}</div>
+            <div className="detail bottom right">{entry.measurer}</div>
+          </div>
+          <div className="score">
+            <Percentage percentage={totalPercentage}/>
+          </div>
+        </Paper>
       )
-
-    })
+    });
+    //return this.props.list.items.map( (entry, index) => {
+    //  let totalCorrect = this.calculateCorrect(entry);
+    //  let totalWrong = this.calculateWrong(entry);
+    //  let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);
+    //  return (
+    //    <tr key={index} onClick={this.showSummary.bind(this,entry._id)}>
+    //      <td>{moment(entry.date).format('DD.MM.YYYY')}</td>
+    //      <td>{totalCorrect}</td>
+    //      <td>{totalWrong}</td>
+    //      <td><Percentage percentage={totalPercentage}/></td>
+    //    </tr>
+    //  )
+    //
+    //})
   }
   calculateWrong(entry) {
     let wrong = 0;

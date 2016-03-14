@@ -34,8 +34,9 @@ class List extends React.Component {
         <div className="report-list-container">
           {this.renderRows()}
        </div>
-        <RaisedButton label="Uusi raportti" secondary={true} onClick={ (e) => {history.push('report/new'); return false;} } />
-
+        <div className="footer">
+          <RaisedButton label="Uusi raportti" secondary={true} onClick={ (e) => {history.push('report/new'); return false;} } />
+        </div>
       </div>
       //<div id="list">
       //  {Spinner}

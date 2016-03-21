@@ -16,7 +16,6 @@ module.exports = function(req, res){
         Bucket: S3_BUCKET,
         Key: req.query.file_name,
         Expires: 60,
-        ContentType: req.query.file_type,
         ACL: 'public-read'
     };
     s3.getSignedUrl('putObject', s3_params, function(err, data){

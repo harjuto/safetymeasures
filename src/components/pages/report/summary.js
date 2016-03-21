@@ -88,6 +88,7 @@ class Summary extends React.Component {
             </tbody>
           </table>
         <hr />
+        <div className="page-break"></div>
         <h3>Virheet</h3>
         <div>
           {this.renderReportDefects(report)}

@@ -32,32 +32,13 @@ class List extends React.Component {
     return (
       <div>
         <div className="report-list-container">
+          {Spinner}
           {this.renderRows()}
        </div>
         <div className="footer">
           <RaisedButton label="Uusi raportti" secondary={true} onClick={ (e) => {history.push('report/new'); return false;} } />
         </div>
       </div>
-      //<div id="list">
-      //  {Spinner}
-      //  <table>
-      //    <thead>
-      //      <tr>
-      //        <th>Päiväys</th>
-      //        <th>Oikein</th>
-      //        <th>Väärin</th>
-      //        <th>Oikein %</th>
-      //      </tr>
-      //    </thead>
-      //    <tbody>
-      //      {this.renderRows()}
-      //    </tbody>
-      //  </table>
-      //  <hr/>
-      //  <div className="footer">
-      //    <RaisedButton label="Uusi raportti" secondary={true} onClick={ (e) => {history.push('report/new'); return false;} } />
-      //  </div>
-      //</div>
     )
   }
 
@@ -72,8 +53,10 @@ class List extends React.Component {
         <Paper zDepth={1} onClick={this.showSummary.bind(this,entry._id)}>
           <div className="details">
             <div className="detail top left">{moment(entry.date).format('DD.MM.YYYY')}</div>
-            <div className="detail top right">{entry.contractor}</div>
-            <div className="detail bottom right">{entry.measurer}</div>
+            <div className="detail top right">{entry.contractor || 'Urakoitsija' }</div>
+            <div className="detail bottom right">{entry.measurer || 'Mittaaja' }</div>
+            <div className="detail bottom left">{entry.sitename || 'Työmaa' }</div>
+
           </div>
           <div className="score">
             <Percentage percentage={totalPercentage}/>

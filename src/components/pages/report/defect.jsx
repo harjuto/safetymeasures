@@ -27,15 +27,66 @@ class Defect extends React.Component {
   componentDidMount() {
     var _this = this;
     this.refs.image.onchange = function(){
-        var files = document.getElementById("image").files;
-        var file = files[0];
-        if(file == null){
+      var files = document.getElementById("image").files;
+      var file = files[0];
+
+      var img = document.createElement('img');
+      var reader = new FileReader();
+      reader.onload = e => {
+          img.src = e.target.result;
+
+          var canvas = document.createElement("canvas");
+          //var canvas = $("<canvas>", {"id":"testing"})[0];
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0);
+
+          var MAX_WIDTH = 600;
+          var MAX_HEIGHT = 800;
+          var width = img.width;
+          var height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          var dataurl = canvas.toDataURL("image/jpeg");
+          document.getElementById('image-preview').src = dataurl;
+
+          var binary = atob(dataurl.split(',')[1]);
+          var array = [];
+          for(var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+          }
+          var resizedImageBlob = new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+          if(resizedImageBlob == null){
             alert("No file selected.");
-        }
-        else{
-            _this.get_signed_request(file);
-        }
+          }
+          else{
+            _this.get_signed_request(resizedImageBlob);
+          }
+
+
+      };
+
+      // Load files into file reader
+      reader.readAsDataURL(file);
     };
+
+
+
+
   }
 
   render() {
@@ -105,13 +156,15 @@ class Defect extends React.Component {
       xhr.onerror = function() {
           alert("Could not upload file.");
       };
+
       xhr.send(file);
   }
 
   get_signed_request(file){
       var _this = this;
+      var filename = new Date().getTime() + '.jpeg';
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", "/api/sign_s3?file_name="+file.name+"&file_type="+file.type);
+      xhr.open("GET", "/api/sign_s3?file_name="+filename);
       xhr.onreadystatechange = function(){
           if(xhr.readyState === 4){
               if(xhr.status === 200){

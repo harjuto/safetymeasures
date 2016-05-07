@@ -19,7 +19,6 @@ export default class ReportSection extends React.Component {
 
   render() {
     var category = this.props.category;
-
     return (
       <div className="category-section">
         <div className="category-title">

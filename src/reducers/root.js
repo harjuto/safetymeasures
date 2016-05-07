@@ -3,7 +3,7 @@ import { LOGIN_SUCCESFUL, CLEAR_AUTHENTICATION } from '../actions/login';
 
 const initialState = {
   auth: undefined
-}
+};
 
 export default (state = initialState, action ) => {
   switch(action.type) {

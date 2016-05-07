@@ -18,7 +18,8 @@ const style = {
 
 class Summary extends React.Component {
   render() {
-    var report = _.find(this.props.list.items, report => {
+    let project = this.props.state.selectedProject;
+    let report = _.find(this.props.state.selectedProject.reports, report => {
       return report._id == this.props.params.id
     });
     let totalCorrect = this.calculateCorrect(report);
@@ -31,20 +32,20 @@ class Summary extends React.Component {
             <thead></thead>
             <tbody>
               <tr>
+                <td>Työmaan nimi</td>
+                <td>{project.sitename}</td>
+              </tr>
+              <tr>
                 <td>Urakoitsija</td>
-                <td>{report.contractor}</td>
+                <td>{project.contractor}</td>
               </tr>
               <tr>
                 <td>Työnjohtaja</td>
-                <td>{report.foreman}</td>
-              </tr>
-              <tr>
-                <td>Työmaan nimi</td>
-                <td>{report.sitename}</td>
+                <td>{project.foreman}</td>
               </tr>
               <tr>
                 <td>Mittaaja</td>
-                <td>{report.measurer}</td>
+                <td>{project.measurer}</td>
               </tr>
               <tr>
                 <td>Päiväys</td>
@@ -147,7 +148,7 @@ class Summary extends React.Component {
     let correct = 0;
     report.categories.forEach( (category) => {
       correct += category.correct;
-    })
+    });
     return correct;
   }
 
@@ -155,14 +156,14 @@ class Summary extends React.Component {
     let wrong = 0;
     report.categories.forEach( (category) => {
       wrong += category.defects ? category.defects.length : 0;
-    })
+    });
     return wrong;
   }
 }
 
 function mapStateToProps(state){
   return {
-    list: state.listReducer
+    state: state.projectReducer
   }
 }
 

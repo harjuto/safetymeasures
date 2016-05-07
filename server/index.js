@@ -14,4 +14,4 @@ app.get('/api/sign_s3', require('./src/amazon'));
 app.get('/api/greet', function(req, res) {
   res.send('Hello!');
 })
-server.listen(1337);
+server.listen(5000, '0.0.0.0');

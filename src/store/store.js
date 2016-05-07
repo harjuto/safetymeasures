@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import rootReducer from '../reducers/root';
-import listReducer from '../reducers/list';
 import reportReducer from '../reducers/report'
 import loginReducer from '../reducers/login';
+import projectReducer from '../reducers/project';
 import {getAuthentication, connectToFirebase} from '../actions/login';
 
 const createStoreWithMiddleware = applyMiddleware(
@@ -13,9 +13,9 @@ const createStoreWithMiddleware = applyMiddleware(
 
 const combinedReducer = combineReducers({
   rootReducer,
-  listReducer,
   reportReducer,
-  loginReducer
+  loginReducer,
+  projectReducer
 });
 
 const store = createStoreWithMiddleware(combinedReducer);

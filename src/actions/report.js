@@ -1,6 +1,7 @@
 import actions from '../../shared/actions';
 import firebase from '../utilities/firebase';
 
+// New report related actions
 export const INCREMENT_CORRECT = 'INCREMENT_CORRECT';
 export const DECREMENT_CORRECT = 'DECREMENT_CORRECT';
 export const SUBMIT_DEFECT = 'SUBMIT_DEFECT';
@@ -9,17 +10,21 @@ export const DEFECT_DATA_CHANGED = 'DEFECT_DATA_CHANGED';
 export const REPORT_DATA_CHANGED = 'REPORT_DATA_CHANGED';
 export const CLEAR_REPORT = 'CLEAR_REPORT';
 
+//export const FETCHING_PROJECT_DATA = 'FETCHING_PROJECT_DATA';
+//export const RECEIVE_PROJECT_DATA = 'RECEIVE_PROJECT_DATA';
 export function submitReport(report) {
   return dispatch => {
     dispatch(clearReport());
     firebase.saveReport(report)
   }
 }
+
 export function clearReport() {
   return {
     type: CLEAR_REPORT
   }
 }
+
 export function reportDataChanged(data) {
   return {
     type: REPORT_DATA_CHANGED,
@@ -54,9 +59,12 @@ export function removeDefect(id) {
     id
   }
 }
+
 export function submitDefect(data) {
   return {
     type: SUBMIT_DEFECT,
     data
   }
 }
+
+

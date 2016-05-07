@@ -1,11 +1,11 @@
 var path = require('path');
-var HtmlwebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
 
 const TARGET = process.env.npm_lifecycle_event;
 const PATHS = {
   app: path.join(__dirname, 'src'),
-  build: path.join(__dirname, 'build')
+  build: path.join(__dirname, 'build'),
+  assets: path.join(__dirname, 'build/static')
 };
 
 module.exports = {
@@ -48,7 +48,7 @@ module.exports = {
     hot: true,
     inline: true,
     progress: true,
-
+    host: '0.0.0.0',
     // Display only errors to reduce the amount of output.
     stats: 'errors-only',
     proxy: {
@@ -64,11 +64,6 @@ module.exports = {
     port: "8080"
   },
   plugins: [
-    //new HtmlwebpackPlugin({
-    //  title: 'Infoscreen',
-    //  appMountId: 'app',
-    //  template: './src/index.tpl.html'
-    //}),
     new webpack.HotModuleReplacementPlugin(),
     // new webpack.optimize.UglifyJsPlugin({minimize: true})
   ]

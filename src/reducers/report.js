@@ -5,9 +5,9 @@ import {
   SUBMIT_DEFECT,
   REMOVE_DEFECT,
   DEFECT_DATA_CHANGED,
-  SUBMIT_REPORT,
   REPORT_DATA_CHANGED,
-  CLEAR_REPORT } from '../actions/report';
+  CLEAR_REPORT,
+} from '../actions/report';
 
 import _ from 'lodash';
 import reportMetadata from '../metadata';
@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
 
     case SUBMIT_DEFECT:
       var clonedState = clone(state);
-      var category = _.find(clonedState.categories, {'id': action.data.category.id})
+      var category = _.find(clonedState.categories, {'id': action.data.category.id});
       category.defects.push(action.data.defect);
       return clonedState;
 

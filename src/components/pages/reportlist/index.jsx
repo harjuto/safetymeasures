@@ -1,21 +1,20 @@
 import React from 'react';
 import Fixtures from '../../../fixtures';
 import moment from 'moment';
-import ListItem from './listitem';
 import {Link} from 'react-router';
 import { connect } from 'react-redux';
 import history from '../../../utilities/history';
 import _ from 'lodash';
 import RaisedButton from 'material-ui/lib/raised-button';
-import {listMeasurements} from '../../../actions/measurement';
+import {listReports} from '../../../actions/project';
 import Percentage from '../../uiwidgets/percentage';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import Paper from 'material-ui/lib/paper';
 
-class List extends React.Component {
+class ReportList extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch(listMeasurements(this.props.list.pagination))
+    this.props.dispatch(listReports(this.props.state.selectedProject._id))
   }
 
   constructor() {
@@ -25,7 +24,7 @@ class List extends React.Component {
 
   render() {
     let Spinner = null;
-    if(this.props.list.loading) {
+    if(this.props.state.loading) {
       Spinner = <CircularProgress />
 
     }
@@ -37,6 +36,7 @@ class List extends React.Component {
        </div>
         <div className="footer">
           <RaisedButton label="Uusi raportti" secondary={true} onClick={ (e) => {history.push('report/new'); return false;} } />
+          <RaisedButton label="Takaisin" primary={true} onClick={ (e) => {history.push('/'); return false;}} />
         </div>
       </div>
     )
@@ -45,12 +45,12 @@ class List extends React.Component {
 
   renderRows() {
 
-    return this.props.list.items.map( (entry, index) => {
+    return this.props.state.selectedProject.reports.map( (entry, index) => {
       let totalCorrect = this.calculateCorrect(entry);
       let totalWrong = this.calculateWrong(entry);
       let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);
       return (
-        <Paper zDepth={1} onClick={this.showSummary.bind(this,entry._id)}>
+        <Paper key={index} zDepth={1} onClick={this.showSummary.bind(this,entry._id)}>
           <div className="details">
             <div className="detail top left">{moment(entry.date).format('DD.MM.YYYY')}</div>
             <div className="detail top right">{entry.contractor || 'Urakoitsija' }</div>
@@ -64,20 +64,6 @@ class List extends React.Component {
         </Paper>
       )
     });
-    //return this.props.list.items.map( (entry, index) => {
-    //  let totalCorrect = this.calculateCorrect(entry);
-    //  let totalWrong = this.calculateWrong(entry);
-    //  let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);
-    //  return (
-    //    <tr key={index} onClick={this.showSummary.bind(this,entry._id)}>
-    //      <td>{moment(entry.date).format('DD.MM.YYYY')}</td>
-    //      <td>{totalCorrect}</td>
-    //      <td>{totalWrong}</td>
-    //      <td><Percentage percentage={totalPercentage}/></td>
-    //    </tr>
-    //  )
-    //
-    //})
   }
   calculateWrong(entry) {
     let wrong = 0;
@@ -99,13 +85,11 @@ class List extends React.Component {
     history.push('report/summary/' + id);
   }
 
-
 }
-
 
 function mapStateToProps(state){
   return {
-    list: state.listReducer
+    state: state.projectReducer,
   }
 }
 
@@ -114,4 +98,4 @@ function mapDispatchToProps(dispatch) {
     dispatch
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default connect(mapStateToProps, mapDispatchToProps)(ReportList);

@@ -8,7 +8,9 @@ import { Provider } from 'react-redux';
 import { Router, Route, Link, IndexRoute} from 'react-router';
 import history from './utilities/history';
 import Dashboard from './components/pages/dashboard/dashboard';
-import List from './components/pages/list/list';
+import ReportList from './components/pages/reportlist/index';
+import Project from './components/pages/project/index';
+import NewProject from './components/pages/project/create';
 import NewReport from './components/pages/report/new';
 import Defect from './components/pages/report/defect';
 import Summary from './components/pages/report/summary';
@@ -21,19 +23,21 @@ ReactDOM.render(
       <Router history={history}>
         <Route path="/" component={App} >
           <Route name="login" path="/login" component={Login} />
-          <IndexRoute component={List} />
+          <IndexRoute component={Project} />
+          <Route path="project/new" component={NewProject} />
+          <Route path="report/list/:projectId" component={ReportList} />
           <Route path="report/new" component={NewReport} />
           <Route path="report/new/defect/:category" component={Defect} />
           <Route path="report/summary/:id" component={Summary} />
         </Route>
         <Route path="*" component={App}/>
-
       </Router>
     </div>
   </Provider>
   ,
   document.getElementById('app')
 );
+
 
 window.addEventListener('load', function() {
     new FastClick(document.body);

@@ -30,16 +30,27 @@ class Report extends React.Component {
   }
 
   componentDidMount() {
+    console.info(this.props.project)
     if(!this.props.report.date) {
       this.props.dispatch(reportDataChanged({
-        'date': moment().format('YYYY-MM-DD')
+        'date': moment().format('YYYY-MM-DD'),
+        'projectId': this.props.project._id
       }))
     }
   }
 
   render() {
+    let project = this.props.project || {};
+    let report = this.props.report || {};
     return (
       <div>
+        <div className="info">
+            <div>Työmaa: {project.sitename}</div>
+            <div>Urakoitsija: {project.contractor}</div>
+            <div>Työnjohtaja: {project.foreman}</div>
+            <div>Mittaaja: Todo</div>
+            <div>Päiväys: {report.date}</div>
+        </div>
         {this.renderSections(this.props.report)}
       </div>
     )
@@ -51,21 +62,6 @@ class Report extends React.Component {
     let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);
     return (
       <div>
-        <div className="info">
-          <Paper zDepth={2}>
-            <TextField id="contractor" value={report.contractor}  hintText="Urakoitsija" style={style} underlineShow={false} onChange={this.handleChange} />
-            <Divider />
-            <TextField id="foreman" value={report.foreman} hintText="Työnjohtaja" style={style} underlineShow={false} onChange={this.handleChange} />
-            <Divider />
-            <TextField id="sitename" value={report.sitename}  hintText="Työmaan nimi" style={style} underlineShow={false} onChange={this.handleChange} />
-            <Divider />
-            <TextField id="measurer" value={report.measurer} hintText="Mittaaja" style={style} underlineShow={false} onChange={this.handleChange} />
-            <Divider />
-            <input id="date" type="date" value={report.date} placeholder="Päiväys" onChange={this.handleChange} />
-            <Divider />
-          </Paper>
-        </div>
-
         <div className="categories">
           {report.categories.map( (category, index) => {
             return (
@@ -120,8 +116,10 @@ class Report extends React.Component {
 
 
 function mapStateToProps(state){
+  console.info(state)
   return {
-    report: state.reportReducer
+    report: state.reportReducer,
+    project: state.projectReducer.selectedProject
   }
 }
 

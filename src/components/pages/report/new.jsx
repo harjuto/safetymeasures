@@ -12,6 +12,7 @@ import Divider from 'material-ui/lib/divider';
 import Paper from 'material-ui/lib/paper';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import Percentage from '../../uiwidgets/percentage';
+import {parseNameFromEmailString} from '../../../utilities/helpers';
 
 const style = {
   marginLeft: 20
@@ -20,7 +21,6 @@ const style = {
 function dateFormatter(date) {
   return moment(date).format('DD.MM.YYYY');
 }
-
 class Report extends React.Component {
 
   constructor() {
@@ -30,11 +30,11 @@ class Report extends React.Component {
   }
 
   componentDidMount() {
-    console.info(this.props.project)
     if(!this.props.report.date) {
       this.props.dispatch(reportDataChanged({
         'date': moment().format('YYYY-MM-DD'),
-        'projectId': this.props.project._id
+        'projectId': this.props.project._id,
+        'measurer': parseNameFromEmailString(this.props.loggedInUser)
       }))
     }
   }
@@ -48,7 +48,7 @@ class Report extends React.Component {
             <div>Työmaa: {project.sitename}</div>
             <div>Urakoitsija: {project.contractor}</div>
             <div>Työnjohtaja: {project.foreman}</div>
-            <div>Mittaaja: Todo</div>
+            <div>Mittaaja: {parseNameFromEmailString(this.props.loggedInUser)}</div>
             <div>Päiväys: {report.date}</div>
         </div>
         {this.renderSections(this.props.report)}
@@ -72,7 +72,7 @@ class Report extends React.Component {
         </div>
         <div className="footer">
           <RaisedButton label="Tallenna" secondary={true} onClick={ this.submit } />
-          <RaisedButton label="Peruuta" primary={true} onClick={ (e) => {history.push('/'); return false;}} />
+          <RaisedButton label="Peruuta" primary={true} onClick={ (e) => {history.push('report/list/' + this.props.project._id);; return false;}} />
             <div className="categories-total">
               <span>Oikein: {totalCorrect}</span>
               <span>Väärin: {totalWrong}</span>
@@ -108,7 +108,7 @@ class Report extends React.Component {
   submit(e) {
     var data = this.props.report;
     this.props.dispatch(submitReport(data));
-    history.push('/');
+    history.push('report/list/' + this.props.project._id);
     return false;
   }
 }
@@ -116,10 +116,10 @@ class Report extends React.Component {
 
 
 function mapStateToProps(state){
-  console.info(state)
   return {
     report: state.reportReducer,
-    project: state.projectReducer.selectedProject
+    project: state.projectReducer.selectedProject,
+    loggedInUser: state.rootReducer.auth.password.email
   }
 }
 

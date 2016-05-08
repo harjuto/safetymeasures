@@ -45,7 +45,7 @@ class Summary extends React.Component {
               </tr>
               <tr>
                 <td>Mittaaja</td>
-                <td>{project.measurer}</td>
+                <td>{report.measurer}</td>
               </tr>
               <tr>
                 <td>Päiväys</td>
@@ -95,7 +95,7 @@ class Summary extends React.Component {
           {this.renderReportDefects(report)}
         </div>
         <div className="footer">
-          <RaisedButton label="Takaisin" onClick={ (e) => {history.push('/'); return false;} } />
+          <RaisedButton label="Takaisin" onClick={ (e) => {history.push('report/list/' + project._id);; return false;} } />
           <RaisedButton label="Tulosta PDF" onClick={ window.print } icon={<PrintIcon/>} />
         </div>
       </div>

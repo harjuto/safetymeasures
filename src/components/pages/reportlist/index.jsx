@@ -30,6 +30,7 @@ class ReportList extends React.Component {
     }
     return (
       <div>
+        <h3>{this.props.state.selectedProject.sitename}</h3>
         <div className="report-list-container">
           {Spinner}
           {this.renderRows()}
@@ -50,18 +51,15 @@ class ReportList extends React.Component {
       let totalWrong = this.calculateWrong(entry);
       let totalPercentage = _.toInteger(( totalCorrect / (totalCorrect + totalWrong) ) * 100);
       return (
-        <Paper key={index} zDepth={1} onClick={this.showSummary.bind(this,entry._id)}>
-          <div className="details">
+        <div className="report-details" key={index} onClick={this.showSummary.bind(this,entry._id)}>
+          <div className="header">
             <div className="detail top left">{moment(entry.date).format('DD.MM.YYYY')}</div>
-            <div className="detail top right">{entry.contractor || 'Urakoitsija' }</div>
-            <div className="detail bottom right">{entry.measurer || 'Mittaaja' }</div>
-            <div className="detail bottom left">{entry.sitename || 'Työmaa' }</div>
-
+            <div className="detail top right">{entry.measurer || 'Mittaaja' }</div>
           </div>
-          <div className="score">
+          <div className="body">
             <Percentage percentage={totalPercentage}/>
           </div>
-        </Paper>
+        </div>
       )
     });
   }

@@ -3,6 +3,7 @@ import {listProjects, selectProject} from '../../../actions/project';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/lib/raised-button';
 import history from '../../../utilities/history';
+import Paper from 'material-ui/lib/paper';
 
 class ProjectList extends React.Component {
 
@@ -13,6 +14,7 @@ class ProjectList extends React.Component {
   render() {
     return (
       <div>
+        <h3>Projektit</h3>
         <div className="project-list-container">
           {this.renderProjects()}
         </div>
@@ -26,13 +28,23 @@ class ProjectList extends React.Component {
   renderProjects() {
     return this.props.state.map( (project, index) => {
       return (
-        <div key={index} onClick={ () => this.props.dispatch(selectProject(project))}>
-          <span>
-            Site:{project.sitename}
-            Contractor: {project.contractor}
-            Foreman: {project.foreman}
-          </span>
-        </div>
+        <Paper key={index} zDepth={1} onClick={ () => this.props.dispatch(selectProject(project))}>
+          <div className="details">
+            <div className="detail">
+              <div>Projekti:</div>
+              {project.sitename}
+            </div>
+            <div className="detail">
+              <div>Urakoitsija:</div>
+              {project.contractor}
+            </div>
+            <div className="detail">
+              <div>Työnjohtaja:</div>
+              {project.foreman}
+            </div>
+          </div>
+
+        </Paper>
       )
     })
   }

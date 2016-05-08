@@ -8,15 +8,25 @@ body {
     position: fixed;
     z-index: 10;
     top:0;
-    height: 60px;
+    height: 30px;
     left: 0;
     right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: 1px solid @color-light-gray-darker;
+    .auth {
+      margin-right: 10px;
+    }
+    .logout-button {
+      margin-right: 10px;
+    }
   }
   .container {
     .page-content {
       position: absolute;
       padding: 20px;
-      top: 60px;
+      top: 30px;
       left:0;
       right: 0;
       margin-bottom: 60px;

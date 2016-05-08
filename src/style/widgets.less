@@ -66,3 +66,32 @@
   }
 
 }
+
+.score {
+  width: 100%;
+  height:100%;
+  position: relative;
+  .graph-container {
+    height: 10px;
+    width: 100%;
+    position:relative;
+    .bar-base {
+      position: absolute;
+      background: #E2E1E1;
+      left: 0;
+      right: 0;
+      height: 10px;
+    }
+    .bar-meter {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 10px;
+      width: 0%;
+      background: cyan;
+    }
+  }
+  .numeric {
+    text-align: center;
+  }
+}

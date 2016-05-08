@@ -40,15 +40,11 @@ export default class SlideButton extends React.Component {
   }
 
   onTouchDown(event) {
-    console.info(event);
     this.setState({
       touchDown: true,
-    })
+    });
     setTimeout( () => {
       if(this.state.touchDown) {
-        console.info('Firing decrement')
-        console.info(event);
-      
         this.props.onSlideAction();
       }
     }, HOLD_THRESHOLD)

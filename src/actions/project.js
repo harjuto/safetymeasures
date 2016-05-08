@@ -68,8 +68,6 @@ export function listReports(projectId) {
     dispatch(fetchingReports(projectId));
     firebase.listReports(projectId)
       .then((data) => {
-        console.info('listing for ' + projectId)
-
         dispatch(receiveReports(data.val()));
       },(error) => {
         console.info('Failed to query reports');

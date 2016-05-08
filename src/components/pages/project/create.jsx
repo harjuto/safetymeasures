@@ -24,7 +24,6 @@ class CreateProject extends React.Component {
     let project = this.props.state || {};
     return (
       <div>
-        Hello from form
         <div className="info">
           <Paper zDepth={2}>
             <TextField id="sitename" value={project.sitename}  hintText="Työmaan nimi" style={style} underlineShow={false} onChange={this.handleChange} />

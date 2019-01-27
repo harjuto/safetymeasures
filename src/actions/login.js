@@ -42,13 +42,12 @@ export function login(credentials) {
 
 export function logout() {
   return dispatch => {
-    firebase.logout()
+    FirebaseApp.logout()
   }
 }
 export function loggedOut() {
   return dispatch => {
     dispatch(clearAuthentication())
-    history.push('/login')
   }
 }
 export function clearAuthentication() {

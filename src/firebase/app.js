@@ -24,6 +24,10 @@ class Firebase {
       .catch((error) => callback(null, error));
   }
 
+  logout() {
+    this.auth.signOut();
+  }
+
   attachAuthChangeListener(callback) {
     this.auth.onAuthStateChanged(callback);
   }

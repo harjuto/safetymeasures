@@ -14,14 +14,6 @@ class FirebaseConnector {
     this.firebase.unauth();
   }
 
-  getAuthentication() {
-    return firebase.auth().currentUser;
-  }
-
-  //Database functionality
-  listProjects() {
-    // return this.firebase.child('projects').once('value')
-  }
 
   saveProject(project) {
   //   var ref = this.firebase.child('projects');

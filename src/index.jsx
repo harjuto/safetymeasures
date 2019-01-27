@@ -13,7 +13,6 @@ import NewProject from './components/pages/project/create';
 import NewReport from './components/pages/report/new';
 import Defect from './components/pages/report/defect';
 import Summary from './components/pages/report/summary';
-import Login from './components/login/loginform';
 import FastClick from 'fastclick';
 import FirebaseApp  from './firebase/app';
 
@@ -22,7 +21,6 @@ ReactDOM.render(
     <div>
       <Router history={history}>
         <Route path="/" component={App} >
-          <Route name="login" path="/login" component={Login} />
           <IndexRoute component={Project} />
           <Route path="project/new" component={NewProject} />
           <Route path="report/list/:projectId" component={ReportList} />

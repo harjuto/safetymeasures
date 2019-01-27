@@ -15,6 +15,7 @@ class Firebase {
     });
 
     this.auth = app.auth();
+    this.database = app.database();
   }
 
   login(credentials, callback) {
@@ -23,13 +24,16 @@ class Firebase {
       .catch((error) => callback(null, error));
   }
 
-
   attachAuthChangeListener(callback) {
     this.auth.onAuthStateChanged(callback);
   }
 
   getAuthentication() {
     return this.auth.currentUser;
+  }
+
+  listProjects() {
+    return this.database.ref('projects').once('value')
   }
 }
 

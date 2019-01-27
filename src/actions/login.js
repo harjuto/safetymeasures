@@ -16,8 +16,9 @@ import firebase from '../utilities/firebase';
 
 export function connectToFirebase() {
   return dispatch => {
-    FirebaseApp.attachAuthChangeListener( (authData) => {
-      if (authData) {
+    FirebaseApp.attachAuthChangeListener( (user) => {
+      if (user) {
+        dispatch(loginSuccessful(user));
       } else {
         dispatch(loggedOut());
       }
@@ -31,7 +32,7 @@ export function login(credentials) {
       if (error) {
         dispatch(loginFailed(error));
       } else {
-        dispatch(loginSuccessful(authData));
+        dispatch(loginSuccessful(authData.user));
         history.push('/')
       }
       }

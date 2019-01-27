@@ -1,5 +1,6 @@
 import firebase from '../utilities/firebase';
 import history from '../utilities/history';
+import FirebaseApp from '../firebase/app';
 
 export const RECEIVE_PROJECTS = 'RECEIVE_PROJECTS';
 export const FETCHING_PROJECTS = 'FETCHING_PROJECTS';
@@ -13,7 +14,7 @@ export const FETCHING_REPORTS = "FETCHING_REPORTS";
 export function listProjects() {
   return dispatch => {
     dispatch(fetchingProjects());
-    firebase.listProjects()
+    FirebaseApp.listProjects()
       .then((data) => {
         dispatch(receiveProjects(data.val()));
       },(error) => {

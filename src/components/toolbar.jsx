@@ -27,7 +27,7 @@ export default class ToolBar extends React.Component {
     return (
       <div className="toolbar">
         <div className="auth">
-          {auth.password.email}
+          {auth.user.email}
         </div>
         <div className="logout-button" onClick={this.logout}>
           <a>Kirjaudu ulos</a>

@@ -10,12 +10,13 @@ export const CLEAR_AUTHENTICATION = "CLEAR_AUTHENTICATION";
 
 import history from '../utilities/history';
 
+import FirebaseApp from '../firebase/app';
+
 import firebase from '../utilities/firebase';
 
 export function connectToFirebase() {
   return dispatch => {
-    firebase.connect();
-    firebase.attachAuthChangeListener( (authData) => {
+    FirebaseApp.attachAuthChangeListener( (authData) => {
       if (authData) {
       } else {
         dispatch(loggedOut());
@@ -25,15 +26,14 @@ export function connectToFirebase() {
 }
 export function login(credentials) {
   return dispatch => {
-    dispatch(loginInProgress())
-    firebase.login(credentials, (error, authData) => {
-        console.info('Login finished')
-        if (error) {
-          dispatch(loginFailed(error));
-        } else {
-          dispatch(loginSuccessful(authData));
-          history.push('/')
-        }
+    dispatch(loginInProgress());
+    FirebaseApp.login(credentials, (authData, error) => {
+      if (error) {
+        dispatch(loginFailed(error));
+      } else {
+        dispatch(loginSuccessful(authData));
+        history.push('/')
+      }
       }
     )
   }
@@ -57,7 +57,7 @@ export function clearAuthentication() {
 }
 export function getAuthentication() {
   return dispatch => {
-    var authData = firebase.getAuthentication()
+    var authData = FirebaseApp.getAuthentication();
     if(authData) {
       dispatch(loginSuccessful(authData))
     }

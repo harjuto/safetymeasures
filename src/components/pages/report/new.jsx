@@ -119,7 +119,7 @@ function mapStateToProps(state){
   return {
     report: state.reportReducer,
     project: state.projectReducer.selectedProject,
-    loggedInUser: state.rootReducer.auth.password.email
+    loggedInUser: state.rootReducer.auth.user.email
   }
 }
 

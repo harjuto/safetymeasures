@@ -34,14 +34,14 @@ class LoginForm extends React.Component {
             <label>
               Sähköposti
               <div>
-                <TextField onChange={this.updateUsername} value={username} />
+                <TextField onChange={this.updateUsername} value={username} id="username" />
               </div>
             </label>
             <br/>
             <label>
               Salasana
               <div>
-                <TextField type="password" onChange={this.updatePassword} value={password} />
+                <TextField type="password" onChange={this.updatePassword} value={password} id="password" />
               </div>
             </label>
             <br/>

@@ -2,7 +2,6 @@ import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
 import Divider from 'material-ui/lib/divider';
-import history from '../../../utilities/history';
 import Paper from 'material-ui/lib/paper';
 import { connect } from 'react-redux';
 
@@ -52,7 +51,6 @@ class CreateProject extends React.Component {
   submit(e) {
     var data = this.props.state;
     this.props.dispatch(submitProject(data));
-    history.push('/');
     return false;
   }
 }

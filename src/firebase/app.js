@@ -46,6 +46,15 @@ class Firebase {
       .orderByChild('date')
       .once('value')
   }
+
+  saveProject(project) {
+    var ref = this.database.ref('projects');
+    return ref.push(project);
+  }
+
+  getProjectData(projectId) {
+    return this.database.ref('projects/' + projectId).once('value')
+  }
 }
 
 export default new Firebase();

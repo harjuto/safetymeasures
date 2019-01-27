@@ -46,7 +46,10 @@ export function projectDataChanged(data) {
 export function submitProject(project) {
   return dispatch => {
     dispatch(clearProject());
-    firebase.saveProject(project);
+    FirebaseApp.saveProject(project)
+      .then(() => {
+        history.push('/');
+      })
   }
 }
 

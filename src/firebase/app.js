@@ -2,6 +2,7 @@ import app from 'firebase/app';
 // These imports load individual services into the firebase namespace.
 import 'firebase/auth';
 import 'firebase/database';
+import moment from 'moment';
 
 class Firebase {
   constructor() {
@@ -38,6 +39,12 @@ class Firebase {
 
   listProjects() {
     return this.database.ref('projects').once('value')
+  }
+
+  listReports(projectId) {
+    return this.database.ref('measurements/' + projectId)
+      .orderByChild('date')
+      .once('value')
   }
 }
 

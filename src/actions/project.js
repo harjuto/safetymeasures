@@ -67,10 +67,11 @@ export function selectProject(project) {
 export function listReports(projectId) {
   return dispatch => {
     dispatch(fetchingReports(projectId));
-    firebase.listReports(projectId)
+    FirebaseApp.listReports(projectId)
       .then((data) => {
         dispatch(receiveReports(data.val()));
-      },(error) => {
+      })
+      .catch((error) => {
         console.info('Failed to query reports');
       })
   }

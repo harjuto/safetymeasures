@@ -1,6 +1,6 @@
-import actions from '../../shared/actions';
-import firebase from '../utilities/firebase';
 
+import FirebaseApp from '../firebase/app';
+import history from "../utilities/history";
 // New report related actions
 export const INCREMENT_CORRECT = 'INCREMENT_CORRECT';
 export const DECREMENT_CORRECT = 'DECREMENT_CORRECT';
@@ -12,10 +12,13 @@ export const CLEAR_REPORT = 'CLEAR_REPORT';
 
 //export const FETCHING_PROJECT_DATA = 'FETCHING_PROJECT_DATA';
 //export const RECEIVE_PROJECT_DATA = 'RECEIVE_PROJECT_DATA';
-export function submitReport(report) {
+export function submitReport(report, projectId) {
   return dispatch => {
     dispatch(clearReport());
-    firebase.saveReport(report)
+    FirebaseApp.saveReport(report)
+      .then(() => {
+        history.push('report/list/' + projectId);
+      })
   }
 }
 

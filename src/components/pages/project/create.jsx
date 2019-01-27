@@ -3,6 +3,8 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
 import Divider from 'material-ui/lib/divider';
 import Paper from 'material-ui/lib/paper';
+import history from '../../../utilities/history';
+
 import { connect } from 'react-redux';
 
 import {projectDataChanged, submitProject} from '../../../actions/project';

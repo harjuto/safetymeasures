@@ -1,18 +1,13 @@
-export const LOGIN = "LOGIN";
 export const UPDATE_CREDENTIALS = "UPDATE_CREDENTIALS";
 export const LOGIN_SUCCESFUL = "LOGIN_SUCCESFUL";
 export const LOGIN_IN_PROGRESS = "LOGIN_IN_PROGRESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
-export const LOGOUT = "LOGOUT";
-export const LOGGED_OUT = "LOGGED_OUT";
 export const GET_AUTHENTICATION = "GET_AUTHENTICATION";
 export const CLEAR_AUTHENTICATION = "CLEAR_AUTHENTICATION";
 
 import history from '../utilities/history';
 
 import FirebaseApp from '../firebase/app';
-
-import firebase from '../utilities/firebase';
 
 export function connectToFirebase() {
   return dispatch => {

@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 import ReportCategory from './category';
 import moment from 'moment';
 import { submitReport, reportDataChanged } from '../../../actions/report';
@@ -7,10 +6,6 @@ import { connect } from 'react-redux';
 import history from '../../../utilities/history';
 import _ from 'lodash';
 import RaisedButton from 'material-ui/lib/raised-button';
-import TextField from 'material-ui/lib/text-field';
-import Divider from 'material-ui/lib/divider';
-import Paper from 'material-ui/lib/paper';
-import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import Percentage from '../../uiwidgets/percentage';
 import {parseNameFromEmailString} from '../../../utilities/helpers';
 
@@ -107,8 +102,7 @@ class Report extends React.Component {
 
   submit(e) {
     var data = this.props.report;
-    this.props.dispatch(submitReport(data));
-    history.push('report/list/' + this.props.project._id);
+    this.props.dispatch(submitReport(data, this.props.project._id));
     return false;
   }
 }

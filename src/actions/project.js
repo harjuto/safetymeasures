@@ -1,4 +1,3 @@
-import firebase from '../utilities/firebase';
 import history from '../utilities/history';
 import FirebaseApp from '../firebase/app';
 

@@ -52,6 +52,11 @@ class Firebase {
     return ref.push(project);
   }
 
+  saveReport(report) {
+    var ref = this.database.ref('measurements/' + report.projectId);
+    return ref.push(report);
+  }
+
   getProjectData(projectId) {
     return this.database.ref('projects/' + projectId).once('value')
   }

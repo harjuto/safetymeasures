@@ -1,10 +1,9 @@
-String.prototype.capitalize = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
+const capitalize = function(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-export function parseNameFromEmailString(email) {
-  let nameString = email.replace(/@.*/, '');
+export function parseNameFromEmailString(user) {
+  let nameString = user.email.replace(/@.*/, '');
   let nameTokens = nameString.split('.');
-  return nameTokens[0].capitalize() + " " + nameTokens[1].capitalize();
-
+  return nameTokens.map(capitalize).join(" ");
 }
